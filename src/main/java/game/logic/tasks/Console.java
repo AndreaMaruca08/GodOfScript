@@ -1,0 +1,45 @@
+package game.logic.tasks;
+
+import game.logic.board.Board;
+import game.logic.entity.Entity;
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static game.logic.tasks.ConsoleLog.logOf;
+
+@Data
+public class Console {
+    private final Entity entity;
+    private final Board board;
+
+    private List<ConsoleLog> log = new ArrayList<>(24);
+
+    public Event execute(String input) {
+        try {
+            for(Task task : entity.getTasks()){
+                if(task.isValid(input)){
+                    var res = task.run(entity, board);
+                    addLog(logOf(input, res == null ? Event.ERROR : res));
+                    return res;
+                }
+            }
+            addLog(logOf(input, Event.NOT_FOUND));
+            return Event.NOT_FOUND;
+        }catch (Exception e) {
+            addLog(logOf(input, Event.ERROR));
+            return Event.ERROR;
+        }
+    }
+
+    public void addLog(ConsoleLog message){
+        if(log.size() > 23)
+            clearLog();
+        log.add(message);
+    }
+
+    public void clearLog(){
+        log.clear();
+    }
+}
