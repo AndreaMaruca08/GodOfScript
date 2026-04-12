@@ -1,11 +1,13 @@
 package game.logic.entity;
 
 import game.graphic.shared.Colors;
-import game.logic.tasks.Task;
+import game.logic.board.Position;
+import game.logic.tasks.Script;
+import game.logic.tasks.standard.CommonTasks;
 import lombok.Data;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -18,30 +20,52 @@ public class Entity {
     private double baseAttack;
     private double baseDefense;
 
-    private List<Task> tasks;
+    private List<Script> scripts;
 
-    public Entity(double maxHp, double baseAttack, double baseDefense, String name, List<Task> tasks) {
+    private double xp;
+
+    private Position position;
+
+    public Entity(double maxHp, double baseAttack, double baseDefense, String name, List<Script> tasks, double xp) {
         this.maxHp = checkValue(maxHp);
         this.hp = checkValue(maxHp);
         this.baseAttack = checkValue(baseAttack);
         this.baseDefense = checkValue(baseDefense);
         this.name = name == null ? "No name" : name;
-        this.tasks = tasks;
+        this.scripts = tasks;
+        this.position = new Position(-1, -1);
+        this.xp = xp;
     }
+    public Entity(double maxHp, double baseAttack, double baseDefense, String name, List<Script> tasks) {
+        this(maxHp, baseAttack, baseDefense, name, tasks, 0);
+    }
+
     public Entity(double maxHp, double baseAttack, double baseDefense, String name) {
-        this(maxHp, baseAttack, baseDefense, name, new ArrayList<>());
+        this(maxHp, baseAttack, baseDefense, name, CommonTasks.BASE_TASKS);
     }
 
     public Color getColor(){
         return Colors.ERROR;
     }
 
-    public void addTask(Task task){
-        tasks.add(task);
+    public void takeDamage(double damage){
+        hp -= (damage - defense);
     }
 
-    public void removeTask(Task task){
-        tasks.remove(task);
+    public boolean isDead(){
+        return hp <= 0;
+    }
+
+    public double toXp(){
+        return maxHp/10 + baseAttack + baseDefense*2;
+    }
+
+    public void addTask(Script... tasks){
+        this.scripts.addAll(Arrays.asList(tasks));
+    }
+
+    public void removeTask(Script task){
+        scripts.remove(task);
     }
 
     private double checkValue(double val){

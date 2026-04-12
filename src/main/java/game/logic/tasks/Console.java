@@ -18,7 +18,7 @@ public class Console {
 
     public Event execute(String input) {
         try {
-            for(Task task : entity.getTasks()){
+            for(Script task : entity.getScripts()){
                 if(task.isValid(input)){
                     var res = task.run(entity, board);
                     addLog(logOf(input, res == null ? Event.ERROR : res));

@@ -23,6 +23,10 @@ public class Tile {
         this(false, true, entity);
     }
 
+    public boolean isEmpty(){
+        return !isOccupied && !isWall;
+    }
+
     public static Tile empty(){
         return new Tile(false, false, null);
     }

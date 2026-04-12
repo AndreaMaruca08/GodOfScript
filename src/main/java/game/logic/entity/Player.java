@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Player extends Entity{
     public Player() {
-        super(100, 10, 5, "PLAYER");
+        super(100, 10, 1, "PLAYER");
     }
 
     @Override

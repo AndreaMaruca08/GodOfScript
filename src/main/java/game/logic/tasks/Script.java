@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
-public abstract class Task {
+public abstract class Script {
     private final List<Command> commands;
     protected final String name;
     private String[] currentArgs = new String[0];
 
-    protected Task(String name, Command... commands) {
+    protected Script(String name, Command... commands) {
         this.commands = Arrays.stream(commands).toList();
         this.name = "---"+name.toUpperCase()+"---";
     }

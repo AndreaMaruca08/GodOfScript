@@ -1,4 +1,4 @@
-package game.graphic;
+package game.graphic.components;
 
 import core.components.ScalePage;
 import core.components.ScaleUpdatableComponent;
@@ -52,7 +52,7 @@ public class GraphicConsole extends ScaleUpdatableComponent {
 
     private void handleEnterPressed() {
         String command = input.getTextArea().getText().trim();
-        if (command.equals(BASE) || command.isEmpty())
+        if (command.equals(BASE) || command.length() < 2)
             return;
 
         Event result = console.execute(command.substring(2));
@@ -61,7 +61,7 @@ public class GraphicConsole extends ScaleUpdatableComponent {
 
         input.setText(BASE);
 
-        update();
+        updateAll();
     }
 
     @Override
@@ -77,8 +77,10 @@ public class GraphicConsole extends ScaleUpdatableComponent {
             String msg = log.message().length() > 24 ? log.message().substring(0, 21) + "..." : log.message();
             Dim dimLog = new Dim(STATE_DIM.x(), y, STATE_DIM.width(), 2.5);
             g.drawTextLeft(dimLog, msg, Colors.TEXT);
+
             Dim dimLogState = new Dim(STATE_DIM.x() + 16, y, 4, 2.5);
             g.drawRoundRect(dimLogState, 2, log.event().getResult());
+
             y += 3;
         }
     }

@@ -1,4 +1,4 @@
-package game.graphic.board;
+package game.graphic.components.board;
 
 import core.components.ScaleComponent;
 import core.utilities.Dim;
@@ -9,10 +9,12 @@ import game.logic.board.Tile;
 
 public class GraphicBoard extends ScaleComponent {
     private final Board board;
+    private final GraphicPlayerStatus playerStatus;
 
     public GraphicBoard(Dim dim, Board board) {
         super(dim, "GraphicBoard");
         this.board = board;
+        this.playerStatus = new GraphicPlayerStatus(new Dim(dim.x(), dim.y() - 4, dim.width(), 4), board.getPlayer());
     }
 
     @Override
@@ -30,7 +32,7 @@ public class GraphicBoard extends ScaleComponent {
                 Dim tileDim = new Dim(tileX, tileY, tileWidth, tileHeight);
 
                 if(tile != null) {
-                    g.draw(new GraphicTile(tileDim, tile));
+                    g.draw(new GraphicTile(tileDim, tile, board.isNames()));
                 }
             }
         }
@@ -47,5 +49,8 @@ public class GraphicBoard extends ScaleComponent {
             double lineY = dim.y() + (y * tileHeight);
             g.line(dim.x(), lineY, dim.x() + dim.width(), lineY);
         }
+
+        g.draw(playerStatus);
     }
+
 }

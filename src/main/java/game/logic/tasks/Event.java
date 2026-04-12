@@ -9,6 +9,8 @@ import java.awt.*;
 public enum Event {
     DEAD(Colors.ERROR),
     OK(Colors.SUCCESS),
+    OCCUPIED(Colors.INFO),
+    NO_ENEMY(Colors.NO_ENEMY),
     ERROR(Colors.ERROR),
     NOT_FOUND(Colors.WARNING),;
 
