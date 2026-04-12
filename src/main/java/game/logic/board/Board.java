@@ -94,6 +94,7 @@ public class Board {
             entity.takeDamage(damage);
             if(entity.isDead()){
                 resetTile(tile);
+                getPlayer().gainXp(entity.toXp());
             }
         }
     }

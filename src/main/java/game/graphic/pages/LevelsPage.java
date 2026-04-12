@@ -3,6 +3,7 @@ package game.graphic.pages;
 import core.ScaleUIApplication;
 import core.components.ScalePage;
 import core.utilities.Dim;
+import core.utilities.ScaleGraphic;
 import game.graphic.GraphicLevel;
 import game.graphic.shared.Colors;
 import game.logic.entity.Player;
@@ -18,8 +19,15 @@ public class LevelsPage extends ScalePage {
         initializeLevels(player);
     }
 
+    @Override
+    public void draw(ScaleGraphic g){
+        g.font(2);
+        g.drawText(new Dim(0, 1, 100, 5), "Levels", Colors.TEXT);
+        g.font(0.7);
+    }
+
     private void initializeLevels(Player player) {
-        Dim start = new Dim(1, 1, 15, 5);
+        Dim start = new Dim(1, 5, 15, 5);
         int count = 0;
         for (Level lvl : Levels.LEVELS) {
             addScale(new GraphicLevel(start, player, lvl, app));

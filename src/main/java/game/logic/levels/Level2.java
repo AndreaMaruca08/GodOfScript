@@ -19,11 +19,12 @@ public class Level2 extends Level{
 
         board.setupPlayer(player, new Position(1, 1));
 
-        walls(board, 2, 2, 4, 2);
+        walls(board, 2, 2, 4, 1);
+        walls(board, 2, 3, 1, 4);
 
         board.setTile(8, 1, new Tile(new JuniorDev()));
         board.setTile(5, 7, new Tile(new JuniorDev()));
-        board.setTile(2, 5, new Tile(new JuniorDev()));
+        board.setTile(3, 5, new Tile(new JuniorDev()));
 
         return board;
     }
