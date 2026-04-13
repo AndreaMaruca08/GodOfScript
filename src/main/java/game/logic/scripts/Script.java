@@ -1,4 +1,4 @@
-package game.logic.tasks;
+package game.logic.scripts;
 
 import game.logic.board.Board;
 import game.logic.entity.Entity;

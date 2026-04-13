@@ -34,8 +34,8 @@
 #         * functions;
 #         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
 #           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
-#         * compound tasks having a testable exit status, especially «case»;
-#         * various built-in tasks including «command», «set», and «ulimit».
+#         * compound scripts having a testable exit status, especially «case»;
+#         * various built-in scripts including «command», «set», and «ulimit».
 #
 #   Important for patching:
 #

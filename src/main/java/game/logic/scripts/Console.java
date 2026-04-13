@@ -1,18 +1,26 @@
-package game.logic.tasks;
+package game.logic.scripts;
 
 import game.logic.board.Board;
 import game.logic.entity.Entity;
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.logic.tasks.ConsoleLog.logOf;
+import static game.logic.scripts.ConsoleLog.logOf;
 
-@Data
+@Getter
+@Setter
 public class Console {
     private final Entity entity;
     private final Board board;
+
+    public Console(Board board) {
+        this.board = board;
+        this.entity = board.getPlayer();
+    }
 
     private List<ConsoleLog> log = new ArrayList<>(24);
 

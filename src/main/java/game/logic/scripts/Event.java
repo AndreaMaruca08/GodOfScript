@@ -1,4 +1,4 @@
-package game.logic.tasks;
+package game.logic.scripts;
 
 import game.graphic.shared.Colors;
 import lombok.Getter;
@@ -12,7 +12,9 @@ public enum Event {
     OCCUPIED(Colors.INFO),
     NO_ENEMY(Colors.NO_ENEMY),
     ERROR(Colors.ERROR),
-    NOT_FOUND(Colors.WARNING),;
+    NOT_FOUND(Colors.WARNING),
+
+    WIN(Colors.WIN);
 
     private final Color result;
 

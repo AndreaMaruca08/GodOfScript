@@ -21,7 +21,7 @@ public class GamePage extends ScalePage {
         board = level.board(player);
         setBackground(Colors.PRIMARY);
 
-        GraphicConsole console = new GraphicConsole(new Dim(0.5, 5, 25, 90), this, player, board);
+        GraphicConsole console = new GraphicConsole(new Dim(0.5, 5, 25, 90), this, app, board);
         CoolBorder consoleBorder = new CoolBorder(console.getDim(), Colors.SECONDARY, 4);
 
         GraphicBoard boardGraphic = new GraphicBoard(new Dim(26, 6, 73, 93), board);

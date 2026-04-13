@@ -3,6 +3,9 @@ import game.graphic.pages.LevelsPage;
 import game.logic.entity.Player;
 import game.logic.entity.data.DataSaver;
 
+import javax.swing.*;
+import java.awt.*;
+
 void main() {
     ScaleUIApplication app = new ScaleUIApplication("God of Script");
     Player player;
@@ -10,8 +13,9 @@ void main() {
     try {
         player = DataSaver.loadPlayer();
     }catch (Exception e){
-        System.out.println("No save file found, starting a new game.");
-        player = new Player();
+        JOptionPane.showMessageDialog(null, "Starting a new game");
+        String playerName = JOptionPane.showInputDialog("Enter your name:");
+        player = new Player(playerName);
         DataSaver.savePlayer(player);
     }
 

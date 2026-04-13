@@ -1,10 +1,10 @@
-package game.logic.tasks.standard.graphic_Info;
+package game.logic.scripts.standard.graphic_Info;
 
 import game.logic.board.Board;
 import game.logic.entity.Entity;
-import game.logic.tasks.Command;
-import game.logic.tasks.Event;
-import game.logic.tasks.Script;
+import game.logic.scripts.Command;
+import game.logic.scripts.Event;
+import game.logic.scripts.Script;
 
 import javax.swing.*;
 

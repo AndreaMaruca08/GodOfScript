@@ -1,4 +1,4 @@
-package game.logic.tasks;
+package game.logic.scripts;
 
 public enum TypeOfParam {
     INT {

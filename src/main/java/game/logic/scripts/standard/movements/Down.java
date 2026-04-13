@@ -1,25 +1,25 @@
-package game.logic.tasks.standard.movements;
+package game.logic.scripts.standard.movements;
 
 import game.logic.board.Board;
 import game.logic.board.Position;
 import game.logic.board.exceptions.BoardException;
 import game.logic.entity.Entity;
-import game.logic.tasks.Command;
-import game.logic.tasks.Event;
-import game.logic.tasks.Script;
+import game.logic.scripts.Command;
+import game.logic.scripts.Event;
+import game.logic.scripts.Script;
 
-public class Left extends Script {
-    public Left() {
-        super("left",
-                Command.cmd("left", "Move left"),
-                Command.cmd("a", "Move left")
+public class Down extends Script {
+    public Down() {
+        super("down",
+                Command.cmd("down", "Move down"),
+                Command.cmd("s", "Move down")
         );
     }
 
     @Override
     public Event run(Entity entity, Board board) {
         Position entityPosition = entity.getPosition();
-        Position newPosition = entityPosition.left();
+        Position newPosition = entityPosition.down();
 
         try {
             board.move(entityPosition, newPosition);

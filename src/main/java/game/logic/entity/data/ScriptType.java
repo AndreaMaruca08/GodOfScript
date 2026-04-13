@@ -1,10 +1,10 @@
 package game.logic.entity.data;
 
-import game.logic.tasks.Script;
-import game.logic.tasks.standard.damage.BaseAttack;
-import game.logic.tasks.standard.graphic_Info.Help;
-import game.logic.tasks.standard.graphic_Info.ShowName;
-import game.logic.tasks.standard.movements.*;
+import game.logic.scripts.Script;
+import game.logic.scripts.standard.damage.BaseAttack;
+import game.logic.scripts.standard.graphic_Info.Help;
+import game.logic.scripts.standard.graphic_Info.ShowName;
+import game.logic.scripts.standard.movements.*;
 
 
 public enum ScriptType {

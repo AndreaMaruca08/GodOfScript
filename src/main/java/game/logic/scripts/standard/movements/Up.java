@@ -1,12 +1,12 @@
-package game.logic.tasks.standard.movements;
+package game.logic.scripts.standard.movements;
 
 import game.logic.board.Board;
 import game.logic.board.exceptions.BoardException;
 import game.logic.board.Position;
 import game.logic.entity.Entity;
-import game.logic.tasks.Event;
-import game.logic.tasks.Command;
-import game.logic.tasks.Script;
+import game.logic.scripts.Event;
+import game.logic.scripts.Command;
+import game.logic.scripts.Script;
 
 public class Up extends Script {
 

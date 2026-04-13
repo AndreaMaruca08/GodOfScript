@@ -1,11 +1,10 @@
 package game.logic.board;
 
-import game.logic.board.exceptions.OccupiedException;
-import game.logic.board.exceptions.OutOfBoard;
-import game.logic.board.exceptions.WallException;
+import game.logic.board.exceptions.*;
+import game.logic.entity.Enemy;
 import game.logic.entity.Entity;
 import game.logic.entity.Player;
-import game.logic.tasks.Event;
+import game.logic.scripts.Event;
 import lombok.Data;
 
 import java.util.function.Function;
@@ -92,11 +91,24 @@ public class Board {
         Entity entity = tile.getEntity();
         if(entity != null){
             entity.takeDamage(damage);
-            if(entity.isDead()){
-                resetTile(tile);
-                getPlayer().gainXp(entity.toXp());
+            if(!entity.isDead()) return;
+
+            if(entity instanceof Player) throw new DeadPlayer();
+
+            resetTile(tile);
+            getPlayer().gainXp(entity.toXp());
+            if(noEnemies()) throw new DeadEnemies();
+        }
+    }
+
+    public boolean noEnemies(){
+        for(Tile[] row : tiles){
+            for(Tile tile : row){
+                if(tile.getEntity() != null && tile.getEntity() instanceof Enemy)
+                    return false;
             }
         }
+        return true;
     }
 
     public Event aoeAction(Position centerPos, int radius, Function<Position, Event> action) {

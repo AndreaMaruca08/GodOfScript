@@ -34,11 +34,25 @@ public final class DataSaver {
 
     public static Player loadPlayer() throws IOException {
         File file = new File(FILE);
+
+        // Debug info
+        System.out.println("Current working directory: " + System.getProperty("user.dir"));
+        System.out.println("Looking for file at: " + file.getAbsolutePath());
+        System.out.println("File exists: " + file.exists());
+
+        if (!file.exists()) {
+            File currentDir = new File(".");
+            System.out.println("Files in current directory:");
+            String[] files = currentDir.list();
+            if (files != null) {
+                for (String f : files) {
+                    System.out.println("  " + f);
+                }
+            }
+            throw new IOException("Save file not found");
+        }
+
         Player player = MAPPER.readValue(file, Player.class);
-
-        player.setPosition(new Position(-1, -1));
-
-        player.initializeScriptsAfterLoad();
 
         return player;
     }

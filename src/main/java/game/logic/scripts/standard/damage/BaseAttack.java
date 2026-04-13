@@ -1,11 +1,13 @@
-package game.logic.tasks.standard.damage;
+package game.logic.scripts.standard.damage;
 
 import game.logic.board.Board;
 import game.logic.board.Position;
+import game.logic.board.exceptions.DeadEnemies;
+import game.logic.board.exceptions.DeadPlayer;
 import game.logic.entity.Entity;
-import game.logic.tasks.Command;
-import game.logic.tasks.Event;
-import game.logic.tasks.Script;
+import game.logic.scripts.Command;
+import game.logic.scripts.Event;
+import game.logic.scripts.Script;
 
 public class BaseAttack extends Script {
     public BaseAttack() {
@@ -21,7 +23,13 @@ public class BaseAttack extends Script {
     public Event run(Entity entity, Board board) {
         Position pos = entity.getPosition();
         return board.aoeAction(pos, 1, targetPos -> {
-            board.damageTo(targetPos, entity.getBaseAttack());
+            try {
+                board.damageTo(targetPos, entity.getBaseAttack());
+            }catch (DeadPlayer d){
+                return Event.DEAD;
+            }catch (DeadEnemies d){
+                return Event.WIN;
+            }
             return Event.OK;
         });
     }

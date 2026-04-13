@@ -2,6 +2,7 @@ package game.graphic.pages;
 
 import core.ScaleUIApplication;
 import core.components.ScalePage;
+import core.readycomponents.ScaleButton;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.GraphicLevel;
@@ -16,6 +17,12 @@ public class LevelsPage extends ScalePage {
         super(app, "LevelsPage");
         setBackground(Colors.PRIMARY);
 
+        ScaleButton profileButton = new ScaleButton(new Dim(0, 0, 10, 3), "Profile", Colors.SECONDARY, Colors.TEXT);
+        profileButton.setAction(() -> {app.addPage(new ProfilePage(app, player)); app.changePage("ProfilePage");});
+
+        profileButton.setRounded(false);
+
+        addScale(profileButton);
         initializeLevels(player);
     }
 

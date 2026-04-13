@@ -1,5 +1,6 @@
 package game.graphic.components;
 
+import core.ScaleUIApplication;
 import core.components.ScalePage;
 import core.components.ScaleUpdatableComponent;
 import core.readycomponents.ScaleTxtArea;
@@ -8,18 +9,20 @@ import core.utilities.ScaleGraphic;
 import game.graphic.shared.Colors;
 import game.graphic.shared.Fonts;
 import game.logic.board.Board;
-import game.logic.entity.Player;
-import game.logic.tasks.ConsoleLog;
-import game.logic.tasks.Event;
-import game.logic.tasks.Console;
+import game.logic.scripts.ConsoleLog;
+import game.logic.scripts.Event;
+import game.logic.scripts.Console;
 import lombok.Getter;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GraphicConsole extends ScaleUpdatableComponent {
     private final ScaleTxtArea input;
+
+    private final ScaleUIApplication pages;
     @Getter
     private final Console console;
 
@@ -30,16 +33,25 @@ public class GraphicConsole extends ScaleUpdatableComponent {
     private final Dim STATE_DIM = new Dim(dim.x() + 2.5, this.dim.y() + dim.height()*0.08, 20,3);
     private final Dim NAME_DIM = new Dim(this.dim.x(), this.dim.y() - 4, 30,4);
 
-    public GraphicConsole(Dim dim, ScalePage page, Player player, Board board) {
+    public GraphicConsole(Dim dim, ScalePage page, ScaleUIApplication app, Board board) {
         super(dim, page, "GraphicConsole");
+        this.pages = app;
         this.input = new ScaleTxtArea(new Dim(dim.x(), dim.y(), dim.width(), dim.height()*0.08), Colors.PRIMARY, Colors.TEXT);
-        this.console = new Console(player, board);
+        this.console = new Console(board);
         setupEnterListener();
         input.setText(BASE);
     }
 
     private void setupEnterListener() {
         input.getTextArea().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == ',' || e.getKeyChar() == '\n') {
+                    e.consume();
+                    SwingUtilities.invokeLater(() -> handleEnterPressed());
+                }
+            }
+
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -62,6 +74,14 @@ public class GraphicConsole extends ScaleUpdatableComponent {
         input.setText(BASE);
 
         updateAll();
+
+        if(result == Event.WIN) {
+            JOptionPane.showMessageDialog(null, "You win!");
+            pages.changePage("LevelsPage");
+        }else if(result == Event.DEAD) {
+            JOptionPane.showMessageDialog(null, "You died!");
+            pages.changePage("LevelsPage");
+        }
     }
 
     @Override

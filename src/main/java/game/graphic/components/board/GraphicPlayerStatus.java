@@ -26,10 +26,9 @@ public class GraphicPlayerStatus extends ScaleComponent {
         g.font(1.5);
         g.drawTextLeft(HEALTH_BAR.ifXY(HEALTH_BAR.x() - 3.5, HEALTH_BAR.y() - 0.7), "HP", Colors.TEXT);
         g.font(0.9);
-        g.drawTextLeft(HEALTH_BAR, player.getHp() + "/" + player.getMaxHp(), Colors.TEXT);
+        g.drawTextLeft(HEALTH_BAR, String.format("%.1f/%.1f", player.getHp(), player.getMaxHp()), Colors.TEXT);
 
-        g.drawText(DETAILS, "Lvl " + player.getLevel() +
-                "   XP: " + player.getXp() + "/" + player.getNextLevelXp() +
-                "    Points: " + player.getPoints(), Colors.TEXT);
+        g.drawText(DETAILS, String.format("Lvl %d   XP: %.1f/%.1f    Points: %d   Base damage: %.1f   Base defense: %.1f",
+                player.getLevel(), player.getXp(), player.getNextLevelXp(), player.getPoints(), player.getBaseAttack(), player.getBaseDefense()), Colors.TEXT);
     }
 }

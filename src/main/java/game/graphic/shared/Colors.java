@@ -18,4 +18,6 @@ public final class Colors {
     public static final Color SUCCESS = new Color(60, 100, 60);
     public static final Color WARNING = new Color(100, 100, 60);
     public static final Color ERROR = new Color(100, 60, 60);
+
+    public static final Color WIN = new Color(100, 160, 160);
 }

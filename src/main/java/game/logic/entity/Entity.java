@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import game.graphic.shared.Colors;
 import game.logic.board.Position;
 import game.logic.entity.data.ScriptType;
-import game.logic.tasks.Script;
-import game.logic.tasks.standard.CommonScripts;
+import game.logic.scripts.Script;
+import game.logic.scripts.standard.CommonScripts;
 import lombok.Data;
 
 import java.awt.*;
@@ -33,12 +33,12 @@ public class Entity {
 
     protected int points;
 
-    protected double level;
+    protected int level;
 
     @JsonIgnore
     private Position position;
 
-    public Entity(double maxHp, double baseAttack, double baseDefense, String name, List<Script> scripts, double xp, double level, int points) {
+    public Entity(double maxHp, double baseAttack, double baseDefense, String name, List<Script> scripts, double xp, int level, int points) {
         this.maxHp = checkValue(maxHp);
         this.hp = checkValue(maxHp);
         this.baseAttack = checkValue(baseAttack);
@@ -128,7 +128,7 @@ public class Entity {
     }
 
     public double toXp(){
-        return maxHp + baseAttack + baseDefense*2;
+        return maxHp + baseAttack*3 + baseDefense*4;
     }
 
     public void addTask(Script... tasks){

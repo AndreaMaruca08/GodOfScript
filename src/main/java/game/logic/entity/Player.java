@@ -3,14 +3,18 @@ package game.logic.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import game.graphic.shared.Colors;
 import game.logic.entity.data.DataSaver;
-import game.logic.tasks.standard.CommonScripts;
+import game.logic.scripts.standard.CommonScripts;
 
 import java.awt.*;
 
 public class Player extends Entity{
 
     public Player() {
-        super(100, 10, 1, "PLAYER");
+        super(100, 10, 1, "Player");
+    }
+
+    public Player(String name) {
+        super(100, 10, 1, name);
     }
 
     @Override
@@ -39,6 +43,8 @@ public class Player extends Entity{
     }
 
     public void upgrade(TypeOfUpgrade upgrade){
+        if(points <= 0)
+            return;
         upgrade.upgrade(this);
         DataSaver.savePlayer(this);
     }
