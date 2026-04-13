@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class Tile {
-    private boolean isWall = false;
-    private boolean isOccupied = false;
+    private boolean isWall;
+    private boolean isOccupied;
     private Entity entity;
 
     private Tile(boolean isWall, boolean isOccupied, Entity entity) {
@@ -19,12 +19,13 @@ public class Tile {
         this(isWall, true, null);
     }
 
-    public Tile(Entity entity) {
+    public Tile(Entity entity, Position position) {
         this(false, true, entity);
+        entity.setPosition(position);
     }
 
     public boolean isEmpty(){
-        return !isOccupied && !isWall;
+        return !isOccupied || !isWall && entity == null;
     }
 
     public static Tile empty(){

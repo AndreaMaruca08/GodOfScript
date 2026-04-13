@@ -14,9 +14,9 @@ public class ProfilePage extends ScalePage {
 
     public ProfilePage(ScaleUIApplication app, Player player) {
         super(app, "ProfilePage");
+        this.player = player;
         setBackground(Colors.PRIMARY);
 
-        this.player = player;
         createKey("ESC", () -> app.changePage("LevelsPage"), "ESCAPE", "BACKSPACE");
 
         GraphicPlayer playerGraphic = new GraphicPlayer(new Dim(0, 5, 100, 95), this, player);

@@ -7,7 +7,9 @@ import game.logic.entity.Player;
 import game.logic.scripts.Event;
 import lombok.Data;
 
+import java.util.List;
 import java.util.function.Function;
+
 @Data
 public class Board {
     private Tile[][] tiles;
@@ -18,6 +20,7 @@ public class Board {
     private boolean names = true;
 
     private Position playerPosition;
+    private List<Enemy> enemies = new java.util.ArrayList<>(10);
 
     public Board(int width, int height) {
         this.tiles = new Tile[width][height];
@@ -31,11 +34,33 @@ public class Board {
         this.names = names;
     }
 
+    public void searchEnemies(){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                if(tiles[i][j].getEntity() instanceof Enemy e){
+                    enemies.add(e);
+                }
+            }
+        }
+    }
+
+    private int searchAliveEnemies(){
+        return enemies.stream()
+                .filter(enemy ->!enemy.isDead())
+                .toList().size();
+    }
+
     public void start(){
         active = true;
+        for(Enemy enemy : enemies){
+            enemy.startEnemy();
+        }
     }
     public void stop(){
         active = false;
+        for(Enemy enemy : enemies){
+            enemy.stopEnemy();
+        }
     }
 
     public void clean(){
@@ -81,6 +106,11 @@ public class Board {
         resetTile(startTile);
     }
 
+    public void setupEnemy(Enemy enemy, Position position) {
+        enemy.setPosition(position);
+        setTile(position.x(), position.y(), new Tile(enemy, position));
+    }
+
     public Player getPlayer(){
         return (Player) getTile(playerPosition.x(), playerPosition.y()).getEntity();
     }
@@ -93,22 +123,20 @@ public class Board {
             entity.takeDamage(damage);
             if(!entity.isDead()) return;
 
-            if(entity instanceof Player) throw new DeadPlayer();
+            if(entity instanceof Player) throw new DeadPlayer(getPlayer());
 
             resetTile(tile);
             getPlayer().gainXp(entity.toXp());
-            if(noEnemies()) throw new DeadEnemies();
+            if(entity instanceof Enemy e) {
+                e.stopEnemy();
+                enemies.remove(e);
+            }
+            if(noEnemies()) throw new DeadEnemies(getPlayer());
         }
     }
 
     public boolean noEnemies(){
-        for(Tile[] row : tiles){
-            for(Tile tile : row){
-                if(tile.getEntity() != null && tile.getEntity() instanceof Enemy)
-                    return false;
-            }
-        }
-        return true;
+        return searchAliveEnemies() == 0;
     }
 
     public Event aoeAction(Position centerPos, int radius, Function<Position, Event> action) {
@@ -133,7 +161,7 @@ public class Board {
     public void setupPlayer(Player player, Position position) {
         player.setPosition(position);
         setPlayerPosition(position);
-        setTile(position.x(), position.y(), new Tile(player));
+        setTile(position.x(), position.y(), new Tile(player, position));
     }
 
     private void resetTile(Tile tile){

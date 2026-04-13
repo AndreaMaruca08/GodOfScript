@@ -23,6 +23,10 @@ public class Player extends Entity{
         return getHp() > getMaxHp() * 0.6 ? Colors.SUCCESS : getHp() > getMaxHp() * 0.3 ? Colors.WARNING : Colors.ERROR.brighter();
     }
 
+    public void reset(){
+        this.hp = maxHp;
+    }
+
     public void gainXp(double xp){
         this.xp += xp;
         if(this.xp >= nextLevelXp){

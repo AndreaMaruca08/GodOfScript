@@ -1,7 +1,13 @@
 package game.logic.board.exceptions;
 
+import game.logic.entity.Player;
+import lombok.Getter;
+
 public class DeadEnemies extends BoardException {
-    public DeadEnemies() {
+    @Getter
+    private final Player player;
+    public DeadEnemies(Player player) {
         super("Win");
+        this.player = player;
     }
 }

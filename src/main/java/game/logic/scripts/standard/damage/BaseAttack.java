@@ -26,8 +26,10 @@ public class BaseAttack extends Script {
             try {
                 board.damageTo(targetPos, entity.getBaseAttack());
             }catch (DeadPlayer d){
+                d.getPlayer().reset();
                 return Event.DEAD;
             }catch (DeadEnemies d){
+                d.getPlayer().reset();
                 return Event.WIN;
             }
             return Event.OK;
