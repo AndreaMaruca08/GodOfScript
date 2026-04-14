@@ -23,11 +23,13 @@ public class Console {
     }
 
     private List<ConsoleLog> log = new ArrayList<>(25);
+    private String oldInput = "> ";
 
     public Event execute(String input) {
         try {
             for(Script task : entity.getScripts()){
                 if(task.isValid(input)){
+                    oldInput = "> "+input;
                     var res = task.run(entity, board);
                     addLog(logOf(input, res == null ? Event.ERROR : res));
                     return res;

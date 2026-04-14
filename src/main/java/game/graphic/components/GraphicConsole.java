@@ -58,6 +58,9 @@ public class GraphicConsole extends ScaleUpdatableComponent {
                     e.consume();
                     handleEnterPressed();
                 }
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    input.setText(console.getOldInput());
+                }
             }
         });
     }
