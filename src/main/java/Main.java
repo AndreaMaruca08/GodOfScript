@@ -1,15 +1,14 @@
 import core.ScaleUIApplication;
 import game.graphic.pages.LevelsPage;
-import game.logic.entity.Player;
-import game.logic.entity.data.DataSaver;
+import game.logic.entity.player.Player;
+import game.logic.entity.player.DataSaver;
 
 import javax.swing.*;
-import java.awt.*;
 
 void main() {
     ScaleUIApplication app = new ScaleUIApplication("God of Script");
-    Player player;
 
+    Player player;
     try {
         player = DataSaver.loadPlayer();
     }catch (Exception e){

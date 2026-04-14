@@ -1,11 +1,10 @@
-package game.logic.entity.data;
+package game.logic.entity.player;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
-import game.logic.entity.Player;
-import game.logic.board.Position;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -28,21 +27,15 @@ public final class DataSaver {
         try {
             MAPPER.writeValue(file, player);
         }catch (IOException e){
-            System.out.println("Failed to save player data: " + e.getMessage());
+            System.out.println("Failed to save player player: " + e.getMessage());
         }
     }
 
     public static Player loadPlayer() throws IOException {
         File file = new File(FILE);
 
-        // Debug info
-        System.out.println("Current working directory: " + System.getProperty("user.dir"));
-        System.out.println("Looking for file at: " + file.getAbsolutePath());
-        System.out.println("File exists: " + file.exists());
-
         if (!file.exists()) {
             File currentDir = new File(".");
-            System.out.println("Files in current directory:");
             String[] files = currentDir.list();
             if (files != null) {
                 for (String f : files) {
@@ -52,8 +45,6 @@ public final class DataSaver {
             throw new IOException("Save file not found");
         }
 
-        Player player = MAPPER.readValue(file, Player.class);
-
-        return player;
+        return MAPPER.readValue(file, Player.class);
     }
 }

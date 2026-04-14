@@ -4,8 +4,8 @@ import core.components.ScalePage;
 import core.components.ScaleUpdatableComponent;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
-import game.logic.entity.Player;
-import game.logic.entity.TypeOfUpgrade;
+import game.logic.entity.player.Player;
+import game.logic.entity.player.TypeOfUpgrade;
 
 import java.util.List;
 

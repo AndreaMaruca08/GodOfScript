@@ -11,22 +11,14 @@ public class NormalAi extends Ai{
 
     @Override
     protected void singleMove() {
-        System.out.println(body.getPosition() + "   INIZIO");
-        System.out.println("  muro=" + muro + " basicAttack=" + basicAttack());
 
         if(muro) {
-            boolean moved = moveRight();
-            System.out.println("  moveRight() = " + moved + " -> " + body.getPosition());
-            muro = !moved;
+            muro = !moveRight();
         } else {
-            boolean moved = moveLeft();
-            System.out.println("  moveLeft() = " + moved + " -> " + body.getPosition());
-            if(!moved) {
+            if(!moveLeft()) {
                 muro = true;
             }
             basicAttack();
         }
-
-        System.out.println(body.getPosition() + "   FINE");
     }
 }

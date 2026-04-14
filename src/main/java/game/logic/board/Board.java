@@ -1,9 +1,9 @@
 package game.logic.board;
 
 import game.logic.board.exceptions.*;
-import game.logic.entity.Enemy;
+import game.logic.entity.enemies.Enemy;
 import game.logic.entity.Entity;
-import game.logic.entity.Player;
+import game.logic.entity.player.Player;
 import game.logic.scripts.Event;
 import lombok.Data;
 
@@ -19,18 +19,21 @@ public class Board {
     private boolean active = false;
     private boolean names = true;
 
+    private double xpMultiplier;
+
     private Position playerPosition;
     private List<Enemy> enemies = new java.util.ArrayList<>(10);
 
-    public Board(int width, int height) {
+    public Board(int width, int height, double xpMultiplier) {
         this.tiles = new Tile[width][height];
         this.width = width;
         this.height = height;
         clean();
+        this.xpMultiplier = xpMultiplier;
         playerPosition = new Position(0, 0);
     }
-    public Board(int width, int height, boolean names) {
-        this(width, height);
+    public Board(int width, int height,  double xpMultiplier, boolean names) {
+        this(width, height, xpMultiplier);
         this.names = names;
     }
 
@@ -42,12 +45,6 @@ public class Board {
                 }
             }
         }
-    }
-
-    private int searchAliveEnemies(){
-        return enemies.stream()
-                .filter(enemy ->!enemy.isDead())
-                .toList().size();
     }
 
     public void start(){
@@ -74,6 +71,10 @@ public class Board {
     public Tile getTile(int x, int y) {
         checkBounds(x, y);
         return tiles[x][y];
+    }
+    public Tile getTile(Position position) {
+        checkBounds(position.x(), position.y());
+        return tiles[position.x()][position.y()];
     }
 
     public void setTile(int x, int y, Tile tile) {
@@ -117,40 +118,44 @@ public class Board {
 
     public void damageTo(Position position, double damage){
         checkBounds(position.x(), position.y());
+
         Tile tile = tiles[position.x()][position.y()];
         Entity entity = tile.getEntity();
-        if(entity != null){
-            entity.takeDamage(damage);
-            if(!entity.isDead()) return;
+        if(entity == null)
+            return;
+        entity.takeDamage(damage);
+        if(!entity.isDead()) return;
 
-            if(entity instanceof Player) throw new DeadPlayer(getPlayer());
+        if(entity instanceof Player p) throw new DeadPlayer(p);
 
-            resetTile(tile);
-            getPlayer().gainXp(entity.toXp());
-            if(entity instanceof Enemy e) {
-                e.stopEnemy();
-                enemies.remove(e);
-            }
+        if(entity instanceof Enemy e) {
+            getPlayer().gainXp(entity.toXp() * xpMultiplier);
+            e.stopEnemy();
+            enemies.removeIf(enemy -> enemy == e);
             if(noEnemies()) throw new DeadEnemies(getPlayer());
         }
+
+        resetTile(tile);
     }
 
     public boolean noEnemies(){
-        return searchAliveEnemies() == 0;
+        return enemies.isEmpty();
     }
 
-    public Event aoeAction(Position centerPos, int radius, Function<Position, Event> action) {
+    public Event aoeAction(Position center, int radius, Function<Position, Event> action) {
         boolean foundTarget = false;
         Event lastResult = Event.NO_ENEMY;
 
-        for(int row = centerPos.x() - radius; row < centerPos.x() + radius*2; row++){
-            for(int col = centerPos.y() - radius; col < centerPos.y() + radius*2; col++){
-                if(row == centerPos.x() && col == centerPos.y()) continue;
+        for(int row = center.x() - radius; row < center.x() + radius*2; row++){
+            for(int col = center.y() - radius; col < center.y() + radius*2; col++){
+                if(row == center.x() && col == center.y()) continue;
                 try {
+                    getTile(row, col).setTargeted(true);
                     if(getTile(row, col).isEmpty()) continue;
-
                     foundTarget = true;
                     lastResult = action.apply(new Position(row, col));
+
+                    if(lastResult == Event.WIN || lastResult == Event.DEAD) return lastResult;
                 } catch (Exception _) {}
             }
         }

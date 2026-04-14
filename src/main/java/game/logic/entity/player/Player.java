@@ -1,13 +1,13 @@
-package game.logic.entity;
+package game.logic.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import game.graphic.shared.Colors;
-import game.logic.entity.data.DataSaver;
+import game.logic.entity.Entity;
 import game.logic.scripts.standard.CommonScripts;
 
 import java.awt.*;
 
-public class Player extends Entity{
+public class Player extends Entity {
 
     public Player() {
         super(100, 10, 1, "Player");

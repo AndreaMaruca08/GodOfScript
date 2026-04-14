@@ -6,7 +6,7 @@ import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.components.profile.GraphicPlayer;
 import game.graphic.shared.Colors;
-import game.logic.entity.Player;
+import game.logic.entity.player.Player;
 
 public class ProfilePage extends ScalePage {
     private final static Dim TITLE = new Dim(0, 0, 100, 5);

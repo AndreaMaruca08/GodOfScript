@@ -1,4 +1,4 @@
-package game.logic.entity.data;
+package game.logic.entity.player;
 
 import game.logic.scripts.Script;
 import game.logic.scripts.standard.damage.BaseAttack;

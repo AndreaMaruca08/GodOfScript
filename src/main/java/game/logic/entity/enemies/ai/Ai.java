@@ -1,7 +1,7 @@
 package game.logic.entity.enemies.ai;
 
 import game.logic.board.Board;
-import game.logic.entity.Enemy;
+import game.logic.entity.enemies.Enemy;
 import game.logic.scripts.Event;
 import game.logic.scripts.standard.damage.BaseAttack;
 import game.logic.scripts.standard.movements.Down;
@@ -22,12 +22,12 @@ public abstract class Ai {
     public Ai(Board board,  AIConfig config) {
         this.config = config;
         this.board = board;
-        timer = new Timer(config.getDelayMs(), _ -> singleMove());
-        timer.setInitialDelay(config.getInitialDelayMs());
+        timer = new Timer(config.delayMs, _ -> singleMove());
+        timer.setInitialDelay(config.initialDelayMs);
     }
 
     public double getXpMultiplier() {
-        return config.getXpMultiplier();
+        return config.xpMultiplier;
     }
 
     public void start() {

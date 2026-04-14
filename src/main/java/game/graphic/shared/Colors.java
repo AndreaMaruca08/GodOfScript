@@ -13,6 +13,8 @@ public final class Colors {
 
     public static final Color TEXT = new Color(230, 230, 230);
 
+    public static final Color HIGHLIGHT = THIRD.brighter();
+
     public static final Color NO_ENEMY = new Color(100, 100, 100);
     public static final Color INFO = new Color(60, 60, 100);
     public static final Color SUCCESS = new Color(60, 100, 60);

@@ -4,7 +4,9 @@ import core.components.ScaleComponent;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.shared.Colors;
-import game.logic.entity.Player;
+import game.logic.entity.player.Player;
+
+import java.awt.*;
 
 public class GraphicPlayerStatus extends ScaleComponent {
     private final Player player;
@@ -21,8 +23,13 @@ public class GraphicPlayerStatus extends ScaleComponent {
 
     @Override
     public void draw(ScaleGraphic g) {
-        g.drawRoundRect(HEALTH_BAR, 3, player.getColor());
-        g.drawRoundRectBorder(HEALTH_BAR, 3, player.getColor().darker().darker());
+        //Base health bar
+        g.drawRoundRect(HEALTH_BAR, 3, player.getColor().darker().darker().darker());
+        g.drawRoundRect(
+                new Dim(HEALTH_BAR.x(), HEALTH_BAR.y(), HEALTH_BAR.width() * (player.getHp() / player.getMaxHp()), HEALTH_BAR.height()),
+                3, player.getColor());
+        g.changeDrawWidth(0.2);
+        g.drawRoundRectBorder(HEALTH_BAR, 3, Color.black);
         g.font(1.5);
         g.drawTextLeft(HEALTH_BAR.ifXY(HEALTH_BAR.x() - 3.5, HEALTH_BAR.y() - 0.7), "HP", Colors.TEXT);
         g.font(0.9);

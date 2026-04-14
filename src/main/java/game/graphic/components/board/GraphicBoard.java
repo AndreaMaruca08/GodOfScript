@@ -37,6 +37,12 @@ public class GraphicBoard extends ScaleComponent {
             }
         }
 
+        grill(g, tileWidth, tileHeight);
+
+        g.draw(playerStatus);
+    }
+
+    private void grill(ScaleGraphic g, double tileWidth, double tileHeight){
         g.changeDrawWidth(0.1);
         g.setColor(Colors.THIRD);
 
@@ -49,8 +55,6 @@ public class GraphicBoard extends ScaleComponent {
             double lineY = dim.y() + (y * tileHeight);
             g.line(dim.x(), lineY, dim.x() + dim.width(), lineY);
         }
-
-        g.draw(playerStatus);
     }
 
 }

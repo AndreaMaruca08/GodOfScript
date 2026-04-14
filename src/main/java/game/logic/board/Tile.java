@@ -7,16 +7,14 @@ import lombok.Data;
 public class Tile {
     private boolean isWall;
     private boolean isOccupied;
+    private boolean targeted;
     private Entity entity;
 
     private Tile(boolean isWall, boolean isOccupied, Entity entity) {
         this.isWall = isWall;
         this.isOccupied = isOccupied;
         this.entity = entity;
-    }
-
-    public Tile(boolean isWall) {
-        this(isWall, true, null);
+        targeted = false;
     }
 
     public Tile(Entity entity, Position position) {

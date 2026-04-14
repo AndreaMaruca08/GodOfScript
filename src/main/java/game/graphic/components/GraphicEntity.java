@@ -4,7 +4,6 @@ import core.components.ScaleComponent;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.shared.Colors;
-import game.logic.entity.Enemy;
 import game.logic.entity.Entity;
 
 import java.awt.*;

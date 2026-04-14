@@ -5,6 +5,7 @@ import game.logic.board.Position;
 import game.logic.board.exceptions.DeadEnemies;
 import game.logic.board.exceptions.DeadPlayer;
 import game.logic.entity.Entity;
+import game.logic.entity.player.DataSaver;
 import game.logic.scripts.Command;
 import game.logic.scripts.Event;
 import game.logic.scripts.Script;
@@ -27,9 +28,11 @@ public class BaseAttack extends Script {
                 board.damageTo(targetPos, entity.getBaseAttack());
             }catch (DeadPlayer d){
                 d.getPlayer().reset();
+                DataSaver.savePlayer(d.getPlayer());
                 return Event.DEAD;
             }catch (DeadEnemies d){
                 d.getPlayer().reset();
+                DataSaver.savePlayer(d.getPlayer());
                 return Event.WIN;
             }
             return Event.OK;

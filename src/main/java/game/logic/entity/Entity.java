@@ -3,7 +3,7 @@ package game.logic.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import game.graphic.shared.Colors;
 import game.logic.board.Position;
-import game.logic.entity.data.ScriptType;
+import game.logic.entity.player.ScriptType;
 import game.logic.scripts.Script;
 import game.logic.scripts.standard.CommonScripts;
 import lombok.Data;

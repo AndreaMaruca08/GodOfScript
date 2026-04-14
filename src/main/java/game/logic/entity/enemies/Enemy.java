@@ -1,14 +1,21 @@
-package game.logic.entity;
+package game.logic.entity.enemies;
 
+import game.logic.entity.Entity;
 import game.logic.entity.enemies.ai.Ai;
-import lombok.Setter;
 
-@Setter
 public class Enemy extends Entity {
-    protected Ai ai;
+    public Ai ai;
     public Enemy(double maxHp, double baseAttack, double baseDefense, String name, Ai ai) {
         super(maxHp, baseAttack, baseDefense, name);
         setAi(ai);
+        ai.setBody(this);
+    }
+    public Enemy(double maxHp, double baseAttack, double baseDefense, String name) {
+        this(maxHp, baseAttack, baseDefense, name, null);
+    }
+
+    public void setAi(Ai ai){
+        this.ai = ai;
         ai.setBody(this);
     }
 

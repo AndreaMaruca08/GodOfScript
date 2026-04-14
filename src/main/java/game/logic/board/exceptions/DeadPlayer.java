@@ -1,6 +1,6 @@
 package game.logic.board.exceptions;
 
-import game.logic.entity.Player;
+import game.logic.entity.player.Player;
 import lombok.Getter;
 
 public class DeadPlayer extends BoardException {

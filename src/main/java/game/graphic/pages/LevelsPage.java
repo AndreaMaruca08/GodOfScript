@@ -7,7 +7,7 @@ import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.GraphicLevel;
 import game.graphic.shared.Colors;
-import game.logic.entity.Player;
+import game.logic.entity.player.Player;
 import game.logic.levels.Level;
 import game.logic.levels.Levels;
 

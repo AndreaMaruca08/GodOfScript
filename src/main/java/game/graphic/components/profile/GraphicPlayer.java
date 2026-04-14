@@ -4,7 +4,7 @@ import core.components.ScaleComponent;
 import core.components.ScalePage;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
-import game.logic.entity.Player;
+import game.logic.entity.player.Player;
 
 public class GraphicPlayer extends ScaleComponent {
     private final GraphicStats stats;
