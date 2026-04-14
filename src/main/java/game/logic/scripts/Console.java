@@ -22,7 +22,7 @@ public class Console {
         this.entity = board.getPlayer();
     }
 
-    private List<ConsoleLog> log = new ArrayList<>(24);
+    private List<ConsoleLog> log = new ArrayList<>(25);
 
     public Event execute(String input) {
         try {
@@ -35,7 +35,7 @@ public class Console {
             }
             addLog(logOf(input, Event.NOT_FOUND));
             return Event.NOT_FOUND;
-        }catch (Exception e) {
+        } catch (Exception e) {
             addLog(logOf(input, Event.ERROR));
             return Event.ERROR;
         }

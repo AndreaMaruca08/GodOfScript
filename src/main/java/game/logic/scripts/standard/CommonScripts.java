@@ -12,8 +12,8 @@ public final class CommonScripts {
     private CommonScripts() {}
 
     public static List<Script> BASE_SCRIPTS = List.of(
-            new Up(), new Down(), new Left(), new Right(), new Jump(),
-            new BaseAttack(),
-            new Help(), new ShowName()
+            new Up(), new Down(), new Left(), new Right(), new Jump(), //movement
+            new BaseAttack(), //attack
+            new Help(), new ShowName() //settings
     );
 }

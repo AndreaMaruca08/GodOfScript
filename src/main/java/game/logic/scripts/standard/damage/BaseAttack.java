@@ -11,6 +11,7 @@ import game.logic.scripts.Event;
 import game.logic.scripts.Script;
 
 public class BaseAttack extends Script {
+    boolean enemy = false;
     public BaseAttack() {
         String desc = "Perform a basic attack around you";
         super("base attack",
@@ -19,13 +20,19 @@ public class BaseAttack extends Script {
                 Command.cmd("atk", desc)
         );
     }
+    public BaseAttack(boolean enemy) {
+        this();
+        this.enemy = enemy;
+    }
 
     @Override
     public Event run(Entity entity, Board board) {
         Position pos = entity.getPosition();
         return board.aoeAction(pos, 1, targetPos -> {
             try {
-                board.damageTo(targetPos, entity.getBaseAttack());
+                if(enemy) board.damageToPlayer(targetPos, entity.getBaseAttack());
+                else board.damageTo(targetPos, entity.getBaseAttack());
+
             }catch (DeadPlayer d){
                 d.getPlayer().reset();
                 DataSaver.savePlayer(d.getPlayer());

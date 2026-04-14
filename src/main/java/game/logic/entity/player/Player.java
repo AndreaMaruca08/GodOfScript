@@ -10,11 +10,11 @@ import java.awt.*;
 public class Player extends Entity {
 
     public Player() {
-        super(100, 10, 1, "Player");
+        super(60, 10, 1.5, "Player");
     }
 
     public Player(String name) {
-        super(100, 10, 1, name);
+        super(60, 10, 1.5, name);
     }
 
     @Override
@@ -30,9 +30,10 @@ public class Player extends Entity {
     public void gainXp(double xp){
         this.xp += xp;
         if(this.xp >= nextLevelXp){
-            this.xp = 0;
-            nextLevelXp = nextLevelXp*1.30;
+            this.xp -= nextLevelXp;
+            nextLevelXp = nextLevelXp * 1.30;
             levelUp();
+            gainXp(0);
         }
     }
 

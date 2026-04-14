@@ -30,11 +30,16 @@ public class GamePage extends ScalePage {
 
         createKey("ESC", () -> {stop(); app.changePage("LevelsPage");}, "ESCAPE");
 
+        board.setOnGameEnd(() -> {
+            stop();
+            app.changePage("LevelsPage");
+        });
+
+        autoUpdate = new Timer(difficulty.delayMs, _ -> update(boardGraphic.getDim().bigger(0, 6)));
+
         addScale(console);
         addScale(consoleBorder);
         addScale(boardGraphic);
-
-        autoUpdate = new Timer(difficulty.delayMs, _ -> update(boardGraphic.getDim().bigger(0, 6)));
     }
 
     public void stop(){

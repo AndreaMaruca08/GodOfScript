@@ -79,6 +79,7 @@ public class GraphicConsole extends ScaleUpdatableComponent {
             JOptionPane.showMessageDialog(null, "You win!");
             pages.changePage("LevelsPage");
         }else if(result == Event.DEAD) {
+            System.out.println("MORTO");
             JOptionPane.showMessageDialog(null, "You died!");
             pages.changePage("LevelsPage");
         }

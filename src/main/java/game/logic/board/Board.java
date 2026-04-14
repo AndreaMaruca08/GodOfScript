@@ -21,6 +21,8 @@ public class Board {
 
     private double xpMultiplier;
 
+    private Runnable onGameEnd;
+
     private Position playerPosition;
     private List<Enemy> enemies = new java.util.ArrayList<>(10);
 
@@ -53,6 +55,7 @@ public class Board {
             enemy.startEnemy();
         }
     }
+
     public void stop(){
         active = false;
         for(Enemy enemy : enemies){
@@ -80,6 +83,10 @@ public class Board {
     public void setTile(int x, int y, Tile tile) {
         checkBounds(x, y);
         tiles[x][y] = tile;
+    }
+    public void setTile(Position pos, Tile tile) {
+        checkBounds(pos.x(), pos.y());
+        tiles[pos.x()][pos.y()] = tile;
     }
 
     public void move(Position start, Position end) {
@@ -113,17 +120,17 @@ public class Board {
     }
 
     public Player getPlayer(){
-        return (Player) getTile(playerPosition.x(), playerPosition.y()).getEntity();
+        return (Player) getTile(playerPosition).getEntity();
     }
 
     public void damageTo(Position position, double damage){
         checkBounds(position.x(), position.y());
 
-        Tile tile = tiles[position.x()][position.y()];
-        Entity entity = tile.getEntity();
+        Entity entity = getEntityAt(position);
         if(entity == null)
             return;
         entity.takeDamage(damage);
+
         if(!entity.isDead()) return;
 
         if(entity instanceof Player p) throw new DeadPlayer(p);
@@ -135,11 +142,21 @@ public class Board {
             if(noEnemies()) throw new DeadEnemies(getPlayer());
         }
 
-        resetTile(tile);
+        resetTile(getTile(position));
+    }
+
+    public void damageToPlayer(Position position, double damage){
+        if(getEntityAt(position) != null && getEntityAt(position) instanceof Enemy)
+            return;
+        damageTo(position, damage);
     }
 
     public boolean noEnemies(){
         return enemies.isEmpty();
+    }
+
+    private Entity getEntityAt(Position position){
+        return getTile(position).getEntity();
     }
 
     public Event aoeAction(Position center, int radius, Function<Position, Event> action) {

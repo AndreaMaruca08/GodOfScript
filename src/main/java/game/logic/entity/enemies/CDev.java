@@ -4,6 +4,6 @@ import game.logic.entity.enemies.ai.Ai;
 
 public class CDev extends Enemy {
     public CDev(Ai ai) {
-        super(40, 10, 3, "C Dev", ai);
+        super(1000, 2, 3, "C Dev", ai);
     }
 }

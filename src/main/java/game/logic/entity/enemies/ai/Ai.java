@@ -39,14 +39,24 @@ public abstract class Ai {
 
     protected abstract void singleMove();
 
-    private static final BaseAttack atk = new BaseAttack();
+    private static final BaseAttack atk = new BaseAttack(true);
     private static final Left left = new Left();
     private static final Right right = new Right();
     private static final Up up = new Up();
     private static final Down down = new Down();
 
     protected final boolean basicAttack(){
-        return atk.run(body, board) == Event.OK;
+        Event result = atk.run(body, board);
+        if (result == Event.DEAD) {
+            board.stop();
+            JOptionPane.showMessageDialog(null, "You died!");
+            if (board.getOnGameEnd() != null) board.getOnGameEnd().run();
+        } else if (result == Event.WIN) {
+            board.stop();
+            JOptionPane.showMessageDialog(null, "You win!");
+            if (board.getOnGameEnd() != null) board.getOnGameEnd().run();
+        }
+        return result == Event.OK;
     }
 
     protected final boolean moveUp(){

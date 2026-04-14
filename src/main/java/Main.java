@@ -14,6 +14,8 @@ void main() {
     }catch (Exception e){
         JOptionPane.showMessageDialog(null, "Starting a new game");
         String playerName = JOptionPane.showInputDialog("Enter your name:");
+        if(playerName == null)
+            System.exit(0);
         player = new Player(playerName);
         DataSaver.savePlayer(player);
     }

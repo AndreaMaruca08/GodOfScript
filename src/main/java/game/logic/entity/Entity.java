@@ -19,7 +19,6 @@ public class Entity {
 
     protected double hp;
     protected double maxHp;
-    protected double defense;
     protected double baseAttack;
     protected double baseDefense;
 
@@ -71,7 +70,7 @@ public class Entity {
     public double calcXpNeeded(){
         double xpNeeded = 50;
         for(int i = 0; i < level; i++){
-            xpNeeded = xpNeeded*1.30;
+            xpNeeded = xpNeeded*1.35;
         }
         return xpNeeded;
     }
@@ -119,7 +118,7 @@ public class Entity {
     }
 
     public void takeDamage(double damage){
-        hp -= (damage - defense);
+        hp -= Math.max((damage - baseDefense), 0);
     }
 
     @JsonIgnore

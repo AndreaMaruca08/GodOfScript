@@ -6,6 +6,6 @@ public final class Levels {
     private Levels() {}
 
     public static final List<Level> LEVELS = List.of(
-            new Level1(), new Level2()
+            new Level1(), new Level2(), new Level3()
     );
 }
