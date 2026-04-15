@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -47,4 +48,36 @@ public final class DataSaver {
 
         return MAPPER.readValue(file, Player.class);
     }
+
+    public static Player getPlayer(){
+        Player player;
+        try {
+            player = DataSaver.loadPlayer();
+            player.initializeScriptsAfterLoad();
+        }catch (Exception e){
+            player = createPlayer();
+        }
+        return player;
+    }
+
+    public static Player deletePlayer(){
+        File file = new File(FILE);
+        if(file.delete()){
+            return null;
+        }
+        return getPlayer();
+    }
+
+    public static Player createPlayer(){
+        Player player;
+        JOptionPane.showMessageDialog(null, "Starting a new game");
+        String playerName = JOptionPane.showInputDialog("Enter your name:");
+        if(playerName == null)
+            System.exit(0);
+        player = new Player(playerName);
+        DataSaver.savePlayer(player);
+        return player;
+    }
+
+
 }

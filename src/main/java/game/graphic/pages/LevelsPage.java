@@ -20,6 +20,8 @@ public class LevelsPage extends ScalePage {
         ScaleButton profileButton = new ScaleButton(new Dim(0, 0, 10, 3), "Profile", Colors.SECONDARY, Colors.TEXT);
         profileButton.setAction(() -> {app.addPage(new ProfilePage(app, player)); app.changePage("ProfilePage");});
 
+        createKey("ESC", () -> app.changePage("TitlePage"), "ESCAPE");
+
         profileButton.setRounded(false);
 
         addScale(profileButton);

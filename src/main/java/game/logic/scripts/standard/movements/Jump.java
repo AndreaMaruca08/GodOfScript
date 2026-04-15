@@ -36,7 +36,7 @@ public class Jump extends Script {
         return Event.OK;
     }
 
-    private Position newPosition(String direction, int distance, Entity player) {
+    public static Position newPosition(String direction, int distance, Entity player) {
         Position playerPosition = player.getPosition();
 
         if(distance < 0 || distance > 7) throw new IllegalArgumentException("Distanza non valida: " + distance);

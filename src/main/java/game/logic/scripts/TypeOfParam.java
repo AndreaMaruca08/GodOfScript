@@ -17,6 +17,12 @@ public enum TypeOfParam {
         public boolean validate(String value) {
             return value != null && !value.isBlank();
         }
+    },
+    DIRECTION {
+        @Override
+        public boolean validate(String value) {
+            return STRING.validate(value) && value.toLowerCase().matches("[wsad]|up|down|left|right");
+        }
     };
 
     public abstract boolean validate(String value);

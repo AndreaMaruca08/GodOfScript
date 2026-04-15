@@ -96,16 +96,17 @@ public class Board {
         Tile startTile = tiles[start.x()][start.y()];
         Tile endTile = tiles[end.x()][end.y()];
 
+        if(startTile.getEntity() == null)
+            return;
+
         checkTile(endTile);
 
         Entity entity = startTile.getEntity();
-        if(entity != null) {
-            entity.setPosition(end);
-        
-            endTile.setEntity(entity);
-            endTile.setOccupied(true);
-        
-        }
+        entity.setPosition(end);
+
+        endTile.setEntity(entity);
+        endTile.setOccupied(true);
+
 
         if(entity instanceof Player){
             playerPosition = end;

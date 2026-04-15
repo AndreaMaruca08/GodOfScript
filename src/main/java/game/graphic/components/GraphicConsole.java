@@ -38,6 +38,7 @@ public class GraphicConsole extends ScaleUpdatableComponent {
         this.pages = app;
         this.input = new ScaleTxtArea(new Dim(dim.x(), dim.y(), dim.width(), dim.height()*0.08), Colors.PRIMARY, Colors.TEXT);
         this.console = new Console(board);
+        input.getTextArea().requestFocus();
         setupEnterListener();
         input.setText(BASE);
     }

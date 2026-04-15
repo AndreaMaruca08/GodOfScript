@@ -9,6 +9,7 @@ import game.logic.scripts.standard.CommonScripts;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -85,25 +86,25 @@ public class Entity {
         if (scripts == null && scriptTypes != null) {
             scripts = scriptTypes.stream()
                     .map(ScriptType::createScript)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toCollection(ArrayList::new));
+        } else if (scripts != null && !scripts.getClass().getName().contains("ArrayList")) {
+            scripts = new ArrayList<>(scripts);
         }
         return scripts;
     }
-
     public void setScripts(List<Script> scripts) {
-        this.scripts = scripts;
+        this.scripts = new ArrayList<>(scripts);
         updateScriptTypes();
     }
-
     private void updateScriptTypes() {
         if (scripts != null) {
             this.scriptTypes = scripts.stream()
                     .map(this::getScriptType)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
     }
 
-    private ScriptType getScriptType(Script script) {
+    protected ScriptType getScriptType(Script script) {
         return switch (script.getClass().getSimpleName()) {
             case "Up" -> ScriptType.UP;
             case "Down" -> ScriptType.DOWN;
@@ -113,6 +114,8 @@ public class Entity {
             case "BaseAttack" -> ScriptType.BASE_ATTACK;
             case "Help" -> ScriptType.HELP;
             case "ShowName" -> ScriptType.SHOW_NAME;
+            case "Dash" -> ScriptType.DASH;
+            case "Knockback" -> ScriptType.KNOCKBACK;
             default -> throw new IllegalArgumentException("Unknown script type: " + script.getClass().getSimpleName());
         };
     }
@@ -130,8 +133,12 @@ public class Entity {
         return maxHp + baseAttack*3 + baseDefense*4;
     }
 
-    public void addTask(Script... tasks){
+    public void addScript(Script... tasks){
         this.getScripts().addAll(Arrays.asList(tasks));
+        updateScriptTypes();
+    }
+    public void addScript(List<Script> tasks){
+        this.getScripts().addAll(tasks);
         updateScriptTypes();
     }
 
