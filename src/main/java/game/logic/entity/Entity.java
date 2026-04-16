@@ -76,8 +76,16 @@ public class Entity {
         return xpNeeded;
     }
 
+    public double getHpPercentage(){
+        return getHp() / getMaxHp();
+    }
+
     @JsonIgnore
     public Color getColor(){
+        return getHp() > getMaxHp() * 0.6 ? Colors.SUCCESS : getHp() > getMaxHp() * 0.3 ? Colors.WARNING : Colors.ERROR.brighter();
+    }
+    @JsonIgnore
+    public Color getDisplayColor(){
         return Colors.ERROR;
     }
 

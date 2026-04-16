@@ -1,6 +1,7 @@
 package game.logic.entity.enemies.ai;
 
 import game.logic.board.Board;
+import game.logic.board.Position;
 import game.logic.entity.enemies.Enemy;
 import game.logic.scripts.Event;
 import game.logic.scripts.standard.damage.BaseAttack;
@@ -19,6 +20,9 @@ public abstract class Ai {
     protected Timer timer;
     protected final Board board;
 
+    private boolean patrolDirection = true;
+    private int moveCounter = 0;
+
     public Ai(Board board,  AIConfig config) {
         this.config = config;
         this.board = board;
@@ -31,6 +35,10 @@ public abstract class Ai {
     }
 
     public void start() {
+        body.setMaxHp(body.getHp()*config.statsMultiplier);
+        body.setHp(body.getMaxHp());
+        body.setBaseAttack(body.getBaseAttack()*config.statsMultiplier);
+        body.setBaseDefense(body.getBaseDefense()*config.statsMultiplier);
         timer.start();
     }
     public void stop() {
@@ -44,6 +52,49 @@ public abstract class Ai {
     private static final Right right = new Right();
     private static final Up up = new Up();
     private static final Down down = new Down();
+
+    protected void chasePlayer(Position enemyPos, Position playerPos) {
+        if (playerPos.x() < enemyPos.x()) {
+            if (!moveLeft()) {
+                moveVertically(enemyPos, playerPos);
+            }
+        } else if (playerPos.x() > enemyPos.x()) {
+            if (!moveRight()) {
+                moveVertically(enemyPos, playerPos);
+            }
+        } else {
+            moveVertically(enemyPos, playerPos);
+        }
+    }
+
+    protected void moveVertically(Position enemyPos, Position playerPos) {
+        if (playerPos.y() < enemyPos.y()) {
+            moveUp();
+        } else if (playerPos.y() > enemyPos.y()) {
+            moveDown();
+        }
+    }
+
+    protected void patrol() {
+        moveCounter++;
+
+        if (moveCounter < 4) {
+            if (patrolDirection) {
+                if (!moveLeft()) {
+                    patrolDirection = false;
+                    moveCounter = 0;
+                }
+            } else {
+                if (!moveRight()) {
+                    patrolDirection = true;
+                    moveCounter = 0;
+                }
+            }
+        } else {
+            patrolDirection = !patrolDirection;
+            moveCounter = 0;
+        }
+    }
 
     protected final boolean basicAttack(){
         Event result = atk.run(body, board);

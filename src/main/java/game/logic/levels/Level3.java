@@ -23,8 +23,10 @@ public class Level3 extends Level{
         walls(board, 1, 2, 8, 1);
         walls(board, 1, 5, 8, 1);
 
-        board.setupEnemy(new CDev(new NormalAi(board, aiConfig)), new Position(4,3));
-        board.setupEnemy(new CDev(new NormalAi(board, aiConfig)), new Position(4,4));
+        Position enemyPos = new Position(8, 3);
+
+        board.setupEnemy(new CDev(new NormalAi(board, aiConfig)), enemyPos);
+        board.setupEnemy(new CDev(new NormalAi(board, aiConfig)), enemyPos.down());
 
         board.searchEnemies();
         return board;

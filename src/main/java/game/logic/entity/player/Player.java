@@ -1,14 +1,11 @@
 package game.logic.entity.player;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import game.graphic.shared.Colors;
 import game.logic.entity.Entity;
 import game.logic.scripts.level_based.lvl10.Lvl10Scripts;
 import game.logic.scripts.standard.CommonScripts;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Player extends Entity {
@@ -18,13 +15,12 @@ public class Player extends Entity {
     }
 
     public Player(String name) {
-        super(60, 10, 1.5, name);
+        super(30, 10, 1.5, name);
     }
 
     @Override
-    @JsonIgnore
-    public Color getColor(){
-        return getHp() > getMaxHp() * 0.6 ? Colors.SUCCESS : getHp() > getMaxHp() * 0.3 ? Colors.WARNING : Colors.ERROR.brighter();
+    public Color getDisplayColor() {
+        return this.getColor();
     }
 
     public void reset(){
@@ -39,6 +35,7 @@ public class Player extends Entity {
             levelUp();
             gainXp(0);
         }
+        DataSaver.savePlayer(this);
     }
 
     private void levelUp(){
@@ -49,7 +46,7 @@ public class Player extends Entity {
         points++;
         hp = maxHp;
         discoverNewScripts();
-        DataSaver.savePlayer(this);
+
     }
 
     private void discoverNewScripts(){
@@ -64,10 +61,10 @@ public class Player extends Entity {
                 .anyMatch(t -> t == type);
     }
 
-    public void upgrade(TypeOfUpgrade upgrade){
+    public void upgradeStat(TypeOfUpgrade stat){
         if(points <= 0)
             return;
-        upgrade.upgrade(this);
+        stat.upgrade(this);
         DataSaver.savePlayer(this);
     }
 

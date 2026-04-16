@@ -26,6 +26,7 @@ public final class DataSaver {
     public static void savePlayer(Player player) {
         File file = new File(FILE);
         try {
+            player.reset();
             MAPPER.writeValue(file, player);
         }catch (IOException e){
             System.out.println("Failed to save player player: " + e.getMessage());

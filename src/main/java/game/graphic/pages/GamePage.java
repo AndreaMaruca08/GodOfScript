@@ -37,6 +37,8 @@ public class GamePage extends ScalePage {
 
         autoUpdate = new Timer(difficulty.delayMs, _ -> update(boardGraphic.getDim().bigger(0, 6)));
 
+
+
         addScale(console);
         addScale(consoleBorder);
         addScale(boardGraphic);
