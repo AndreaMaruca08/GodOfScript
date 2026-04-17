@@ -4,8 +4,6 @@ import game.logic.scripts.ScriptHelper;
 import game.logic.sound.Sounds;
 import game.logic.board.Board;
 import game.logic.board.Position;
-import game.logic.board.exceptions.DeadEnemies;
-import game.logic.board.exceptions.DeadPlayer;
 import game.logic.entity.Entity;
 import game.logic.scripts.Command;
 import game.logic.scripts.Event;
@@ -16,9 +14,9 @@ public class BaseAttack extends Script {
     public BaseAttack() {
         String desc = "Perform a basic attack around you";
         super("base attack",
+                Command.cmd("atk", desc),
                 Command.cmd("base attack", desc),
-                Command.cmd("attack", desc),
-                Command.cmd("atk", desc)
+                Command.cmd("attack", desc)
         );
     }
     public BaseAttack(boolean enemy) {

@@ -19,12 +19,18 @@ public class LevelsPage extends ScalePage {
 
         ScaleButton profileButton = new ScaleButton(new Dim(0, 0, 10, 3), "Profile", Colors.SECONDARY, Colors.TEXT);
         profileButton.setAction(() -> {app.addPage(new ProfilePage(app, player)); app.changePage("ProfilePage");});
+        profileButton.setRounded(false);
+
+        ScaleButton enemiesButton = new ScaleButton(new Dim(10, 0, 10, 3), "Enemies", Colors.SECONDARY, Colors.TEXT);
+        enemiesButton.setAction(() -> {app.addPage(new ProfilePage(app, player)); app.changePage("EnemiesPage");});
+        enemiesButton.setRounded(false);
 
         createKey("ESC", () -> app.changePage("TitlePage"), "ESCAPE");
 
         profileButton.setRounded(false);
 
         addScale(profileButton);
+        addScale(enemiesButton);
         initializeLevels(player);
     }
 

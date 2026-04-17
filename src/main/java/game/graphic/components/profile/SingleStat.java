@@ -21,7 +21,7 @@ public class SingleStat extends ScalePressableComponent {
 
     @Override
     public void draw(ScaleGraphic g) {
-        g.drawRoundRect(dim, 2, Colors.PRIMARY.darker());
+        g.drawRoundRect(dim, 2, Colors.PRIMARY.brighter());
         g.drawTextLeft(dim, name + " ".repeat(18 - name.length()) + "Upgrade here", Colors.TEXT);
     }
 

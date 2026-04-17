@@ -18,6 +18,8 @@ public class TitlePage extends ScalePage {
 
         LevelsPage levelsPage = new LevelsPage(app, player);
         app.addPage(levelsPage);
+        EnemiesPage enemiesPage = new EnemiesPage(app);
+        app.addPage(enemiesPage);
 
         TitleButton start = new TitleButton(
                 new Dim(30, 30, 40, 7),

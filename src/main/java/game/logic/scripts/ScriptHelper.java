@@ -27,7 +27,7 @@ public final class ScriptHelper {
     public static Position newDirectedPosition(String direction, int distance, Entity player) {
         Position playerPosition = player.getPosition();
 
-        if(distance < 0 || distance > 7) throw new IllegalArgumentException("Distanza non valida: " + distance);
+        if(distance < 0 || distance > 10) throw new IllegalArgumentException("Distanza non valida: " + distance);
 
         return switch (direction.toLowerCase()) {
             case "up", "w" -> playerPosition.add(0, -distance);

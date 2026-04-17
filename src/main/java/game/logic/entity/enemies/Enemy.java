@@ -8,7 +8,6 @@ public class Enemy extends Entity {
     public Enemy(double maxHp, double baseAttack, double baseDefense, String name, Ai ai) {
         super(maxHp, baseAttack, baseDefense, name);
         setAi(ai);
-        ai.setBody(this);
     }
     public Enemy(double maxHp, double baseAttack, double baseDefense, String name) {
         this(maxHp, baseAttack, baseDefense, name, null);
@@ -16,6 +15,7 @@ public class Enemy extends Entity {
 
     public void setAi(Ai ai){
         this.ai = ai;
+        if(ai == null) return;
         ai.setBody(this);
     }
 

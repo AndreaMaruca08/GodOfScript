@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Player extends Entity {
 
     public Player() {
-        super(30, 10, 1.5, "Player");
+        super(30, 10, 2.5, "Player");
     }
 
     public Player(Player playerToSave) {
@@ -29,7 +29,7 @@ public class Player extends Entity {
     }
 
     public Player(String name) {
-        super(30, 10, 1.5, name);
+        super(30, 10, 2.5, name);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Player extends Entity {
         this.xp += xp;
         if(this.xp >= nextLevelXp){
             this.xp -= nextLevelXp;
-            nextLevelXp = nextLevelXp * 1.15;
+            nextLevelXp = nextLevelXp * 1.1;
             levelUp();
             gainXp(0);
         }
@@ -54,9 +54,9 @@ public class Player extends Entity {
 
     private void levelUp(){
         level++;
-        maxHp = maxHp*1.05;
-        baseAttack = baseAttack*1.05;
-        baseDefense = baseDefense*1.05;
+        maxHp = maxHp*1.1;
+        baseAttack = baseAttack*1.1;
+        baseDefense = baseDefense*1.1;
         points++;
         hp = maxHp;
         discoverNewScripts();
