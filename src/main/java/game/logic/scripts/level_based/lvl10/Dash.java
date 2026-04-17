@@ -4,11 +4,7 @@ import game.logic.board.Board;
 import game.logic.board.Position;
 import game.logic.board.exceptions.BoardException;
 import game.logic.entity.Entity;
-import game.logic.scripts.Command;
-import game.logic.scripts.Event;
-import game.logic.scripts.Script;
-import game.logic.scripts.TypeOfParam;
-import game.logic.scripts.standard.movements.Jump;
+import game.logic.scripts.*;
 
 public class Dash extends Script {
     public Dash() {
@@ -20,7 +16,7 @@ public class Dash extends Script {
     @Override
     public Event run(Entity entity, Board board) throws Exception {
         Position playerPosition = entity.getPosition();
-        Position newPosition = Jump.newPosition(getArg(0), 3, entity);
+        Position newPosition = ScriptHelper.newDirectedPosition(getArg(0), 3, entity);
 
         try {
             board.move(playerPosition, newPosition);

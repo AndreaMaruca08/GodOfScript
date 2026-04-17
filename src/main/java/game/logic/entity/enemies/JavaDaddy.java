@@ -4,6 +4,6 @@ import game.logic.entity.enemies.ai.Ai;
 
 public class JavaDaddy extends Enemy {
     public JavaDaddy(Ai ai) {
-        super(400, 30, 40, "Java Daddy", ai);
+        super(600, 50, 60, "Java Daddy", ai);
     }
 }

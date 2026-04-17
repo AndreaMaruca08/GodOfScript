@@ -16,6 +16,7 @@ public class GraphicStats extends ScaleComponent {
     @Override
     public void draw(ScaleGraphic g) {
         g.font(1.5);
+        g.drawRoundRect(dim, (int)dim.width()/10, Colors.PRIMARY.darker());
         g.drawTextLeft(dim, String.format("Level: %d", player.getLevel()), Colors.TEXT);
         g.drawTextLeft(dim.ifXY(dim.x(), dim.y() + 3), String.format("XP: %.1f/%.1f", player.getXp(), player.getNextLevelXp()), Colors.TEXT);
         g.drawTextLeft(dim.ifXY(dim.x(), dim.y() + 6), String.format("Points: %d", player.getPoints()), Colors.TEXT);

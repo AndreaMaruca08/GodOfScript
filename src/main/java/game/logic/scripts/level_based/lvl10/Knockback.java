@@ -2,11 +2,7 @@ package game.logic.scripts.level_based.lvl10;
 
 import game.logic.board.Board;
 import game.logic.entity.Entity;
-import game.logic.scripts.Command;
-import game.logic.scripts.Event;
-import game.logic.scripts.Script;
-import game.logic.scripts.TypeOfParam;
-import game.logic.scripts.standard.movements.Jump;
+import game.logic.scripts.*;
 
 public class Knockback extends Script {
     public Knockback() {
@@ -20,7 +16,7 @@ public class Knockback extends Script {
         board.aoeAction(entity.getPosition(), 1,
                 targetPos ->{
                     if(board.getTile(targetPos).getEntity() != null) {
-                        board.move(targetPos, Jump.newPosition(getArg(0), 2, entity));
+                        board.move(targetPos, ScriptHelper.newDirectedPosition(getArg(0), 2, entity));
                     }
                     return Event.OK;
                 });

@@ -7,25 +7,21 @@ import game.logic.entity.enemies.JuniorDev;
 import game.logic.entity.enemies.ai.AIConfig;
 import game.logic.entity.enemies.ai.NormalAi;
 
-public class Level2 extends Level{
+public class Level2 extends Level {
     public Level2() {
-        super("The junior devs",
-                "A level against junior developers to learn the basics of the game."
-        );
+        super("The Stack Overflow Generation", "Multiple junior devs - learn positioning.");
     }
 
     @Override
     public Board board(Player player, AIConfig config) {
         this.aiConfig = config;
-        Board board = new Board(10, 8, aiConfig.xpMultiplier);
+        Board board = new Board(11, 9, aiConfig.xpMultiplier);
 
-        board.setupPlayer(player, new Position(1, 1));
+        board.setupPlayer(player, new Position(1, 4));
 
-        walls(board, 2, 2, 5, 1);
-        walls(board, 2, 3, 1, 4);
-
-        board.setupEnemy(new JuniorDev(new NormalAi(board, aiConfig)), new Position(8, 1));
-        board.setupEnemy(new JuniorDev(new NormalAi(board, aiConfig)), new Position(3, 5));
+        // Due nemici su lati opposti - costringe il giocatore a scegliere
+        board.setupEnemy(new JuniorDev(new NormalAi(board, aiConfig)), new Position(9, 2));
+        board.setupEnemy(new JuniorDev(new NormalAi(board, aiConfig)), new Position(9, 6));
 
         board.searchEnemies();
         return board;

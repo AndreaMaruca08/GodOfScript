@@ -3,6 +3,7 @@ package game.logic.scripts;
 import game.logic.board.Board;
 import game.logic.entity.Entity;
 
+import game.logic.sound.Sounds;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,17 +30,30 @@ public class Console {
         try {
             for(Script task : entity.getScripts()){
                 if(task.isValid(input)){
-                    oldInput = "> "+input;
+                    oldInput = input;
                     var res = task.run(entity, board);
+                    manageSounds(res);
                     addLog(logOf(input, res == null ? Event.ERROR : res));
                     return res;
                 }
             }
             addLog(logOf(input, Event.NOT_FOUND));
+            Sounds.scriptNotFoundSound();
             return Event.NOT_FOUND;
         } catch (Exception e) {
             addLog(logOf(input, Event.ERROR));
             return Event.ERROR;
+        }
+    }
+
+    private void manageSounds(Event res){
+        switch(res) {
+            case null -> Sounds.scriptErrorSound();
+            case Event.OK -> Sounds.scriptSuccessSound();
+            case Event.OCCUPIED -> Sounds.scriptOccupiedSound();
+            case Event.DEAD -> Sounds.scriptLoseSound();
+            case Event.WIN -> Sounds.scriptWinSound();
+            default -> {}
         }
     }
 

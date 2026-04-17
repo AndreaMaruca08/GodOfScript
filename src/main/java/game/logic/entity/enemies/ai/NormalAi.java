@@ -4,6 +4,7 @@ import game.logic.board.Board;
 import game.logic.board.Position;
 
 public class NormalAi extends Ai{
+    protected int range = 3;
     public NormalAi(Board board, AIConfig config) {
         super(board, config);
     }
@@ -15,7 +16,7 @@ public class NormalAi extends Ai{
 
         int distance = Math.abs(enemyPos.x() - playerPos.x());
 
-        if (distance < 3) {
+        if (distance < range) {
             chasePlayer(enemyPos, playerPos);
         } else {
             patrol();

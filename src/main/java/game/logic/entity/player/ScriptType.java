@@ -3,6 +3,7 @@ package game.logic.entity.player;
 import game.logic.scripts.Script;
 import game.logic.scripts.level_based.lvl10.Dash;
 import game.logic.scripts.level_based.lvl10.Knockback;
+import game.logic.scripts.level_based.lvl15.Beam;
 import game.logic.scripts.standard.damage.BaseAttack;
 import game.logic.scripts.standard.graphic_Info.Help;
 import game.logic.scripts.standard.graphic_Info.ShowName;
@@ -11,7 +12,7 @@ import game.logic.scripts.standard.movements.*;
 
 public enum ScriptType {
     UP, DOWN, LEFT, RIGHT, JUMP, BASE_ATTACK, HELP, SHOW_NAME, DASH,
-    KNOCKBACK;
+    KNOCKBACK, BEAM;
     
     public Script createScript() {
         return switch (this) {
@@ -25,6 +26,7 @@ public enum ScriptType {
             case SHOW_NAME -> new ShowName();
             case DASH -> new Dash();
             case KNOCKBACK -> new Knockback();
+            case BEAM -> new Beam();
         };
     }
 }

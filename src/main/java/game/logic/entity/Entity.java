@@ -124,6 +124,7 @@ public class Entity {
             case "ShowName" -> ScriptType.SHOW_NAME;
             case "Dash" -> ScriptType.DASH;
             case "Knockback" -> ScriptType.KNOCKBACK;
+            case "Beam" -> ScriptType.BEAM;
             default -> throw new IllegalArgumentException("Unknown script type: " + script.getClass().getSimpleName());
         };
     }

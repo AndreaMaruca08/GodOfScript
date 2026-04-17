@@ -16,9 +16,9 @@ public class GraphicPointSystem extends ScaleUpdatableComponent {
         super(dim, page, "GraphicPointSystem");
         var hp = new SingleStat(new Dim(dim.x(), dim.y() + 5, dim.width(), 5), page,
                 "Max HP", ()-> player.upgradeStat(TypeOfUpgrade.HP));
-        var atk = new SingleStat(new Dim(dim.x(), dim.y() + 10, dim.width(), 5), page,
+        var atk = new SingleStat(new Dim(dim.x(), dim.y() + 12, dim.width(), 5), page,
                 "Base attack", ()-> player.upgradeStat(TypeOfUpgrade.ATTACK));
-        var def = new SingleStat(new Dim(dim.x(), dim.y() + 15, dim.width(), 5), page,
+        var def = new SingleStat(new Dim(dim.x(), dim.y() + 19, dim.width(), 5), page,
                 "Base defense", ()-> player.upgradeStat(TypeOfUpgrade.DEFENSE));
 
         stats = List.of(hp, atk, def);

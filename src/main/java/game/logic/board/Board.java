@@ -5,6 +5,7 @@ import game.logic.entity.enemies.Enemy;
 import game.logic.entity.Entity;
 import game.logic.entity.player.Player;
 import game.logic.scripts.Event;
+import game.logic.scripts.ScriptHelper;
 import lombok.Data;
 
 import java.util.List;
@@ -75,6 +76,7 @@ public class Board {
         checkBounds(x, y);
         return tiles[x][y];
     }
+
     public Tile getTile(Position position) {
         checkBounds(position.x(), position.y());
         return tiles[position.x()][position.y()];
@@ -84,6 +86,7 @@ public class Board {
         checkBounds(x, y);
         tiles[x][y] = tile;
     }
+
     public void setTile(Position pos, Tile tile) {
         checkBounds(pos.x(), pos.y());
         tiles[pos.x()][pos.y()] = tile;
@@ -117,11 +120,23 @@ public class Board {
 
     public void setupEnemy(Enemy enemy, Position position) {
         enemy.setPosition(position);
-        setTile(position.x(), position.y(), new Tile(enemy, position));
+        setTile(position, new Tile(enemy, position));
     }
 
     public Player getPlayer(){
         return (Player) getTile(playerPosition).getEntity();
+    }
+
+    public void damageToZone(Position p, int width, int height, double damage){
+        int x = p.x();
+        int y = p.y();
+        checkBounds(x, y);
+        checkBounds(x + width, y + height);
+        for(int i = x; i < x + width; i++){
+            for(int j = y; j < y + height; j++){
+                damageTo(new Position(i, j), damage);
+            }
+        }
     }
 
     public void damageTo(Position position, double damage){
@@ -181,6 +196,29 @@ public class Board {
         return foundTarget ? lastResult : Event.NO_ENEMY;
     }
 
+    public Event lineAction(Entity entity, String direction, int maxDistance, Function<Position, Event> action) {
+        boolean foundTarget = false;
+        Event lastResult = Event.NO_ENEMY;
+
+        for(int i = 1; i <= maxDistance; i++) {
+            Position currentPos = ScriptHelper.newDirectedPosition(direction, i, entity);
+            Tile tile = getTile(currentPos);
+
+            if(!isInBounds(currentPos) || tile.isWall()) {
+                break;
+            }
+            tile.setTargeted(true);
+            foundTarget = true;
+            lastResult = action.apply(currentPos);
+
+            if(lastResult == Event.WIN || lastResult == Event.DEAD) {
+                return lastResult;
+            }
+        }
+
+        return foundTarget ? lastResult : Event.NO_ENEMY;
+    }
+
     public void setupPlayer(Player player, Position position) {
         player.setPosition(position);
         setPlayerPosition(position);
@@ -206,6 +244,13 @@ public class Board {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new OutOfBoard(x, y);
         }
+    }
+
+    public boolean isInBounds(int x, int y){
+        return x >= 0 && x < width && y >= 0 && y < height;
+    }
+    public boolean isInBounds(Position p){
+        return p.x() >= 0 && p.x() < width && p.y() >= 0 && p.y() < height;
     }
 
 }

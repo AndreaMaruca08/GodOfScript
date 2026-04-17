@@ -4,6 +4,6 @@ import game.logic.entity.enemies.ai.Ai;
 
 public class JuniorDev extends Enemy {
     public JuniorDev(Ai ai) {
-        super(20, 2, 1, "Junior Dev", ai);
+        super(30, 3, 1, "Junior Dev", ai);
     }
 }

@@ -2,6 +2,7 @@ package game.logic.entity.player;
 
 import game.logic.entity.Entity;
 import game.logic.scripts.level_based.lvl10.Lvl10Scripts;
+import game.logic.scripts.level_based.lvl15.Lvl15Scripts;
 import game.logic.scripts.standard.CommonScripts;
 
 import java.awt.*;
@@ -12,6 +13,19 @@ public class Player extends Entity {
 
     public Player() {
         super(30, 10, 1.5, "Player");
+    }
+
+    public Player(Player playerToSave) {
+        super(
+                playerToSave.maxHp,
+                playerToSave.baseAttack,
+                playerToSave.baseDefense,
+                playerToSave.name,
+                playerToSave.scripts,
+                playerToSave.xp,
+                playerToSave.level,
+                playerToSave.points
+        );
     }
 
     public Player(String name) {
@@ -31,7 +45,7 @@ public class Player extends Entity {
         this.xp += xp;
         if(this.xp >= nextLevelXp){
             this.xp -= nextLevelXp;
-            nextLevelXp = nextLevelXp * 1.30;
+            nextLevelXp = nextLevelXp * 1.15;
             levelUp();
             gainXp(0);
         }
@@ -40,9 +54,9 @@ public class Player extends Entity {
 
     private void levelUp(){
         level++;
-        maxHp = maxHp*1.10;
-        baseAttack = baseAttack*1.10;
-        baseDefense = baseDefense*1.09;
+        maxHp = maxHp*1.05;
+        baseAttack = baseAttack*1.05;
+        baseDefense = baseDefense*1.05;
         points++;
         hp = maxHp;
         discoverNewScripts();
@@ -52,6 +66,9 @@ public class Player extends Entity {
     private void discoverNewScripts(){
         if(level >= 10 && !hasScript(ScriptType.DASH)) {
             addScript(Lvl10Scripts.LVL10_SCRIPTS);
+        }
+        if(level >= 15 && !hasScript(ScriptType.BEAM)) {
+            addScript(Lvl15Scripts.LVL15_SCRIPTS);
         }
     }
 

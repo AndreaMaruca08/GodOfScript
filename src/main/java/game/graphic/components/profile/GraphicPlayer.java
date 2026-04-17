@@ -11,8 +11,8 @@ public class GraphicPlayer extends ScaleComponent {
     private final GraphicPointSystem points;
     public GraphicPlayer(Dim dim, ScalePage page, Player player) {
         super(dim, "GraphicPlayer");
-        this.stats = new GraphicStats(dim, player);
-        this.points = new GraphicPointSystem(new Dim(30, 5, 70, 95), page, player);
+        this.stats = new GraphicStats(new Dim(2,5,35, 70), player);
+        this.points = new GraphicPointSystem(new Dim(60, 0, 38, 70), page, player);
     }
 
     @Override

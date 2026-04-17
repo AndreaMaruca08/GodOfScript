@@ -2,14 +2,14 @@ package game.logic.levels;
 
 import game.logic.board.Board;
 import game.logic.board.Position;
-import game.logic.entity.enemies.JavaScriptDev;
+import game.logic.entity.enemies.RustDev;
 import game.logic.entity.enemies.ai.AIConfig;
 import game.logic.entity.enemies.ai.NormalAi;
 import game.logic.entity.player.Player;
 
-public class Level3 extends Level {
-    public Level3() {
-        super("The JavaScript Chaos", "Fast but fragile. One narrow corridor.");
+public class Level7 extends Level {
+    public Level7() {
+        super("The Borrow Checker", "Rust's fortress. Built for defense. One unbeatable tank.");
     }
 
     @Override
@@ -19,11 +19,12 @@ public class Level3 extends Level {
 
         board.setupPlayer(player, new Position(1, 5));
 
-        // Corridor stretto - JS dev è veloce, il giocatore deve essere tattico
-        walls(board, 0, 0, 13, 3);
-        walls(board, 0, 8, 13, 3);
+        walls(board, 6, 3, 1, 5);
+        walls(board, 8, 1, 1, 1);
+        walls(board, 8, 9, 1, 1);
+        walls(board, 10, 4, 1, 3);
 
-        board.setupEnemy(new JavaScriptDev(new NormalAi(board, aiConfig)), new Position(11, 5));
+        board.setupEnemy(new RustDev(new NormalAi(board, aiConfig)), new Position(11, 5));
 
         board.searchEnemies();
         return board;

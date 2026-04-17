@@ -1,4 +1,4 @@
-package game.graphic;
+package game.graphic.components;
 
 import core.ScaleUIApplication;
 

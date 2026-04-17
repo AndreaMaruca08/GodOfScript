@@ -8,9 +8,8 @@ import game.logic.entity.enemies.ai.AIConfig;
 import game.logic.entity.enemies.ai.NormalAi;
 
 public class Level1 extends Level {
-
     public Level1() {
-        super("Bases", "Learn the basis");
+        super("Hello World", "Your first enemy. Learn the basics.");
     }
 
     @Override
@@ -18,10 +17,7 @@ public class Level1 extends Level {
         this.aiConfig = config;
         Board board = new Board(11, 9, aiConfig.xpMultiplier);
 
-        board.setupPlayer(player, new Position(0, 4));
-
-        walls(board, 0, 0, 11, 3);
-        walls(board, 0, 6, 11, 3);
+        board.setupPlayer(player, new Position(1, 4));
 
         board.setupEnemy(new JuniorDev(new NormalAi(board, aiConfig)), new Position(9, 4));
 

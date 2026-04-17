@@ -5,7 +5,7 @@ import java.awt.*;
 public final class Colors {
     private Colors() {}
 
-    public static final Color PRIMARY = new Color(34, 34, 34);
+    public static final Color PRIMARY = new Color(20, 20, 20);
     public static final Color SECONDARY = new Color(60, 60, 60);
     public static final Color THIRD = new Color(80, 80, 80);
 

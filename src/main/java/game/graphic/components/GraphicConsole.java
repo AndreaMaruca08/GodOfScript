@@ -15,6 +15,8 @@ import game.logic.scripts.Console;
 import lombok.Getter;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -38,9 +40,9 @@ public class GraphicConsole extends ScaleUpdatableComponent {
         this.pages = app;
         this.input = new ScaleTxtArea(new Dim(dim.x(), dim.y(), dim.width(), dim.height()*0.08), Colors.PRIMARY, Colors.TEXT);
         this.console = new Console(board);
-        input.getTextArea().requestFocus();
-        setupEnterListener();
         input.setText(BASE);
+        setupEnterListener();
+
     }
 
     private void setupEnterListener() {
@@ -64,6 +66,35 @@ public class GraphicConsole extends ScaleUpdatableComponent {
                 }
             }
         });
+        ((AbstractDocument) input.getTextArea().getDocument()).setDocumentFilter(
+                new javax.swing.text.DocumentFilter() {
+                    @Override
+                    public void remove(FilterBypass fb, int offset, int length) throws javax.swing.text.BadLocationException {
+                        if (offset < BASE.length()) {
+                            return;
+                        }
+                        super.remove(fb, offset, length);
+                    }
+
+                    @Override
+                    public void insertString(FilterBypass fb, int offset, String string, javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
+                        if (offset < BASE.length()) {
+                            offset = BASE.length();
+                        }
+                        super.insertString(fb, offset, string, attr);
+                    }
+
+                    @Override
+                    public void replace(FilterBypass fb, int offset, int length, String text, javax.swing.text.AttributeSet attrs) throws javax.swing.text.BadLocationException {
+                        // Se stai sostituendo parte di BASE, non permetterlo
+                        if (offset < BASE.length()) {
+                            offset = BASE.length();
+                            length = 0;
+                        }
+                        super.replace(fb, offset, length, text, attrs);
+                    }
+                }
+        );
     }
 
     private void handleEnterPressed() {
@@ -75,7 +106,7 @@ public class GraphicConsole extends ScaleUpdatableComponent {
 
         status = result == null ? Colors.ERROR : result.getResult();
 
-        input.setText(BASE);
+        resetConsoleText();
 
         updateAll();
 
@@ -83,14 +114,32 @@ public class GraphicConsole extends ScaleUpdatableComponent {
             JOptionPane.showMessageDialog(null, "You win!");
             pages.changePage("LevelsPage");
         }else if(result == Event.DEAD) {
-            System.out.println("MORTO");
             JOptionPane.showMessageDialog(null, "You died!");
             pages.changePage("LevelsPage");
         }
     }
 
+    private void resetConsoleText(){
+        AbstractDocument doc = (AbstractDocument) input.getTextArea().getDocument();
+        DocumentFilter oldFilter = doc.getDocumentFilter();
+        doc.setDocumentFilter(null);
+
+        input.setText(BASE);
+
+        doc.setDocumentFilter(oldFilter);
+
+    }
+
+    private boolean focusRequested = false;
+
     @Override
     public void draw(ScaleGraphic g) {
+        if (!focusRequested) {
+            SwingUtilities.invokeLater(() -> {
+                input.getTextArea().requestFocusInWindow();
+                focusRequested = true;
+            });
+        }
         input.getTextArea().setFont(Fonts.PRIMARY(ScaleGraphic.getX(1.25, g.page())));
         g.font(1.1);
         g.drawTextLeft(NAME_DIM,"Console of " + console.getEntity().getName(), Colors.TEXT);
