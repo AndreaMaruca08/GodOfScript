@@ -18,11 +18,14 @@ public class GraphicTile extends ScaleComponent {
 
     @Override
     public void draw(ScaleGraphic g) {
-        if(tile.isEmpty() && !tile.isTargeted())
+        if(tile.isEmpty() && !tile.isTargeted() && !tile.isExploded())
             return;
         if(tile.isTargeted()){
             g.drawRect(dim, Colors.HIGHLIGHT);
             tile.setTargeted(false);
+        }  if(tile.isExploded()){
+            g.drawRect(dim, Colors.ERROR);
+            tile.setExploded(false);
         }
         if(tile.isWall())
             g.drawRect(dim, Colors.WALL);

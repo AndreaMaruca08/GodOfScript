@@ -1,8 +1,10 @@
 package game.logic.entity.player;
 
 import game.logic.entity.Entity;
+import game.logic.scripts.ScriptType;
 import game.logic.scripts.level_based.lvl10.Lvl10Scripts;
 import game.logic.scripts.level_based.lvl15.Lvl15Scripts;
+import game.logic.scripts.level_based.lvl20.Lvl20Scripts;
 import game.logic.scripts.standard.CommonScripts;
 
 import java.awt.*;
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
 public class Player extends Entity {
 
     public Player() {
-        super(30, 10, 2.5, "Player");
+        super(30, 10, 1.5, "Player");
     }
 
     public Player(Player playerToSave) {
@@ -29,7 +31,7 @@ public class Player extends Entity {
     }
 
     public Player(String name) {
-        super(30, 10, 2.5, name);
+        super(30, 10, 1.5, name);
     }
 
     @Override
@@ -54,9 +56,9 @@ public class Player extends Entity {
 
     private void levelUp(){
         level++;
-        maxHp = maxHp*1.1;
-        baseAttack = baseAttack*1.1;
-        baseDefense = baseDefense*1.1;
+        maxHp = maxHp*1.08;
+        baseAttack = baseAttack*1.08;
+        baseDefense = baseDefense*1.08;
         points++;
         hp = maxHp;
         discoverNewScripts();
@@ -64,18 +66,21 @@ public class Player extends Entity {
     }
 
     private void discoverNewScripts(){
-        if(level >= 10 && !hasScript(ScriptType.DASH)) {
+        if(level >= 10 && hasNotScript(ScriptType.DASH)) {
             addScript(Lvl10Scripts.LVL10_SCRIPTS);
         }
-        if(level >= 15 && !hasScript(ScriptType.BEAM)) {
+        if(level >= 15 && hasNotScript(ScriptType.BEAM)) {
             addScript(Lvl15Scripts.LVL15_SCRIPTS);
+        }
+        if(level >= 20 && hasNotScript(ScriptType.HYPER_BEAM)) {
+            addScript(Lvl20Scripts.LVL20_SCRIPTS);
         }
     }
 
-    private boolean hasScript(ScriptType type) {
+    private boolean hasNotScript(ScriptType type) {
         return getScripts().stream()
                 .map(this::getScriptType)
-                .anyMatch(t -> t == type);
+                .noneMatch(t -> t == type);
     }
 
     public void upgradeStat(TypeOfUpgrade stat){

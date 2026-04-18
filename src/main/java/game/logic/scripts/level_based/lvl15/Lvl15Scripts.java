@@ -8,6 +8,6 @@ public final class Lvl15Scripts {
     private Lvl15Scripts() {}
 
     public static final List<Script> LVL15_SCRIPTS = List.of(
-            new Beam()
+            new Beam(), new Explosion()
     );
 }

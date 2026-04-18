@@ -13,6 +13,7 @@ public enum Event {
     NO_ENEMY(Colors.NO_ENEMY),
     ERROR(Colors.ERROR),
     NOT_FOUND(Colors.WARNING),
+    COOLDOWN(Colors.NO_ENEMY),
 
     WIN(Colors.WIN);
 

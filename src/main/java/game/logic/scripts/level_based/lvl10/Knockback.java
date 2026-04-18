@@ -16,7 +16,7 @@ public class Knockback extends Script {
         board.aoeAction(entity.getPosition(), 1,
                 targetPos ->{
                     if(board.getTile(targetPos).getEntity() != null) {
-                        board.move(targetPos, ScriptHelper.newDirectedPosition(getArg(0), 2, entity));
+                        board.move(targetPos, ScriptHelper.newDirectedPosition(getArg(0), 3, entity));
                     }
                     return Event.OK;
                 });

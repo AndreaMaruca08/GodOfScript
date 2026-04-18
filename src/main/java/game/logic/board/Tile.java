@@ -8,12 +8,14 @@ public class Tile {
     private boolean isWall;
     private boolean isOccupied;
     private boolean targeted;
+    private boolean exploded;
     private Entity entity;
 
     private Tile(boolean isWall, boolean isOccupied, Entity entity) {
         this.isWall = isWall;
         this.isOccupied = isOccupied;
         this.entity = entity;
+        exploded = false;
         targeted = false;
     }
 

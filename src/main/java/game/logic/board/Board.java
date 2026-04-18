@@ -110,7 +110,6 @@ public class Board {
         endTile.setEntity(entity);
         endTile.setOccupied(true);
 
-
         if(entity instanceof Player){
             playerPosition = end;
         }
@@ -125,18 +124,6 @@ public class Board {
 
     public Player getPlayer(){
         return (Player) getTile(playerPosition).getEntity();
-    }
-
-    public void damageToZone(Position p, int width, int height, double damage){
-        int x = p.x();
-        int y = p.y();
-        checkBounds(x, y);
-        checkBounds(x + width, y + height);
-        for(int i = x; i < x + width; i++){
-            for(int j = y; j < y + height; j++){
-                damageTo(new Position(i, j), damage);
-            }
-        }
     }
 
     public void damageTo(Position position, double damage){
@@ -183,7 +170,7 @@ public class Board {
             for(int col = center.y() - radius; col < center.y() + radius*2; col++){
                 if(row == center.x() && col == center.y()) continue;
                 try {
-                    getTile(row, col).setTargeted(true);
+                    getTile(row, col).setExploded(true);
                     if(getTile(row, col).isEmpty()) continue;
                     foundTarget = true;
                     lastResult = action.apply(new Position(row, col));

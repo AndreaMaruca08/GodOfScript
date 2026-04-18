@@ -3,7 +3,7 @@ package game.logic.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import game.graphic.shared.Colors;
 import game.logic.board.Position;
-import game.logic.entity.player.ScriptType;
+import game.logic.scripts.ScriptType;
 import game.logic.scripts.Script;
 import game.logic.scripts.standard.CommonScripts;
 import lombok.Data;
@@ -71,7 +71,7 @@ public class Entity {
     public double calcXpNeeded(){
         double xpNeeded = 50;
         for(int i = 0; i < level; i++){
-            xpNeeded = xpNeeded*1.35;
+            xpNeeded = xpNeeded*1.15;
         }
         return xpNeeded;
     }
@@ -125,6 +125,8 @@ public class Entity {
             case "Dash" -> ScriptType.DASH;
             case "Knockback" -> ScriptType.KNOCKBACK;
             case "Beam" -> ScriptType.BEAM;
+            case "Explosion" -> ScriptType.EXPLOSION;
+            case "HyperBeam" -> ScriptType.HYPER_BEAM;
             default -> throw new IllegalArgumentException("Unknown script type: " + script.getClass().getSimpleName());
         };
     }
