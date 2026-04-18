@@ -43,6 +43,8 @@ public class TitlePage extends ScalePage {
 
     @Override
     public void draw(ScaleGraphic g) {
+        g.font(1);
+        g.drawTextLeft(new Dim(0,1,10,10), "By Andrea Maruca vBETA 1.0", new Color(100,150,100));
         g.font(5);
         g.drawText(new Dim(0,0,100,10), "> God of Script", new Color(100,150,100));
         g.font(1);
