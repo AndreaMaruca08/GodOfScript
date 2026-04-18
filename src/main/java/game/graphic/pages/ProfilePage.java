@@ -8,6 +8,7 @@ import core.utilities.ScaleGraphic;
 import game.graphic.components.profile.GraphicPlayer;
 import game.graphic.shared.Colors;
 import game.logic.entity.player.Player;
+import game.logic.sound.Sounds;
 
 public class ProfilePage extends ScalePage {
     private final static Dim TITLE = new Dim(0, 0, 100, 5);
@@ -24,6 +25,7 @@ public class ProfilePage extends ScalePage {
         ScaleButton btnScripts = new ScaleButton(new Dim(3, 40, 20, 5), "Scripts detail", Colors.PRIMARY.brighter(), Colors.TEXT);
         btnScripts.setRounded(false);
         btnScripts.setAction(() -> {
+            Sounds.clickSound();
             GraphicScriptListPage page = new GraphicScriptListPage(app, player);
             app.addPage(page);
             app.changePage(page.getPageName());

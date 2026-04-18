@@ -9,6 +9,7 @@ import game.graphic.components.GraphicEnemyDetails;
 import game.graphic.shared.Colors;
 import game.logic.entity.enemies.Enemies;
 import game.logic.entity.enemies.Enemy;
+import game.logic.sound.Sounds;
 
 public class EnemiesPage extends ScalePage {
 
@@ -41,19 +42,25 @@ public class EnemiesPage extends ScalePage {
 
             addScale(new GraphicEnemy(enemyDim));
 
-            ScaleButton btnDetails = new ScaleButton(
-                    enemyDim,
-                    enemy.getName(),
-                    Colors.SECONDARY.darker(),
-                    Colors.TEXT
-            );
-            btnDetails.setAction(() -> {
-                GraphicEnemyDetails detailsPage = new GraphicEnemyDetails(app, enemy);
-                app.addPage(detailsPage);
-                app.changePage(detailsPage.getPageName());
-            });
-            btnDetails.setRounded(false);
+            ScaleButton btnDetails = getBtnDetails(enemyDim, enemy);
             addScale(btnDetails);
         }
+    }
+
+    private ScaleButton getBtnDetails(Dim enemyDim, Enemy enemy) {
+        ScaleButton btnDetails = new ScaleButton(
+                enemyDim,
+                enemy.getName(),
+                Colors.SECONDARY.darker(),
+                Colors.TEXT
+        );
+        btnDetails.setAction(() -> {
+            Sounds.clickSound();
+            GraphicEnemyDetails detailsPage = new GraphicEnemyDetails(app, enemy);
+            app.addPage(detailsPage);
+            app.changePage(detailsPage.getPageName());
+        });
+        btnDetails.setRounded(false);
+        return btnDetails;
     }
 }

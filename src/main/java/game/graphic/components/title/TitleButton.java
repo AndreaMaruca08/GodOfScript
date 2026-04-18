@@ -4,6 +4,7 @@ import core.components.ScalePressableComponent;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.shared.Colors;
+import game.logic.sound.Sounds;
 
 public class TitleButton extends ScalePressableComponent {
     private final String content;
@@ -24,6 +25,7 @@ public class TitleButton extends ScalePressableComponent {
 
     @Override
     public void press() {
+        Sounds.clickSound();
         action.run();
     }
 }

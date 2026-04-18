@@ -10,6 +10,7 @@ import game.graphic.shared.Colors;
 import game.logic.entity.player.Player;
 import game.logic.entity.enemies.ai.AIConfig;
 import game.logic.levels.Level;
+import game.logic.sound.Sounds;
 
 import javax.swing.*;
 
@@ -27,6 +28,7 @@ public class GraphicLevel extends ScalePressableComponent {
 
     @Override
     public void press() {
+        Sounds.clickSound();
         AIConfig[] opzioni = AIConfig.values();
         AIConfig scelta = (AIConfig) JOptionPane.showInputDialog(
                 null,

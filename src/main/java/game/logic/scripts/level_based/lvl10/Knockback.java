@@ -13,7 +13,7 @@ public class Knockback extends Script {
     }
     @Override
     public Event run(Entity entity, Board board) throws Exception {
-        board.aoeAction(entity.getPosition(), 1,
+        board.aoeAction(entity.getPosition(), 1, false,
                 targetPos ->{
                     if(board.getTile(targetPos).getEntity() != null) {
                         board.move(targetPos, ScriptHelper.newDirectedPosition(getArg(0), 3, entity));

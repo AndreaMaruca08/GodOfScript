@@ -6,6 +6,7 @@ import game.logic.scripts.Command;
 import game.logic.scripts.CooldownScript;
 import game.logic.scripts.Event;
 import game.logic.scripts.ScriptHelper;
+import game.logic.sound.Sounds;
 
 public class Explosion extends CooldownScript {
 
@@ -18,7 +19,8 @@ public class Explosion extends CooldownScript {
 
     @Override
     protected Event internRun(Entity player, Board board) {
-        return board.aoeAction(player.getPosition(), 3, pos ->
+        Sounds.explosionSound();
+        return board.aoeAction(player.getPosition(), 3, true, pos ->
                 ScriptHelper.catchWinAndLose(() -> board.damageTo(pos, player.getBaseAttack()*3))
         );
     }

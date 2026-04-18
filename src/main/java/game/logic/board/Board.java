@@ -162,7 +162,7 @@ public class Board {
         return getTile(position).getEntity();
     }
 
-    public Event aoeAction(Position center, int radius, Function<Position, Event> action) {
+    public Event aoeAction(Position center, int radius, boolean disruptWalls, Function<Position, Event> action) {
         boolean foundTarget = false;
         Event lastResult = Event.NO_ENEMY;
 
@@ -170,6 +170,10 @@ public class Board {
             for(int col = center.y() - radius; col < center.y() + radius*2; col++){
                 if(row == center.x() && col == center.y()) continue;
                 try {
+                    if(disruptWalls && getTile(row, col).isWall()){
+                        resetTile(getTile(row, col));
+                        continue;
+                    }
                     getTile(row, col).setExploded(true);
                     if(getTile(row, col).isEmpty()) continue;
                     foundTarget = true;

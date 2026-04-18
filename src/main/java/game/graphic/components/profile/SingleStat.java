@@ -5,6 +5,7 @@ import core.components.ScalePressableComponent;
 import core.utilities.Dim;
 import core.utilities.ScaleGraphic;
 import game.graphic.shared.Colors;
+import game.logic.sound.Sounds;
 
 public class SingleStat extends ScalePressableComponent {
     private final String name;
@@ -27,6 +28,7 @@ public class SingleStat extends ScalePressableComponent {
 
     @Override
     public void press() {
+        Sounds.clickSound();
         action.run();
         page.update(new Dim(0,0, 40,50));
     }

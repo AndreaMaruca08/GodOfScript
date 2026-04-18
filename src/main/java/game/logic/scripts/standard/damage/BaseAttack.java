@@ -28,7 +28,7 @@ public class BaseAttack extends Script {
     public Event run(Entity entity, Board board) {
         Position pos = entity.getPosition();
         Sounds.attackSound();
-        return board.aoeAction(pos, 1, targetPos -> ScriptHelper.catchWinAndLose(() -> {
+        return board.aoeAction(pos, 1, false, targetPos -> ScriptHelper.catchWinAndLose(() -> {
             if(enemy) board.damageToPlayer(targetPos, entity.getBaseAttack());
             else board.damageTo(targetPos, entity.getBaseAttack());
         }));
