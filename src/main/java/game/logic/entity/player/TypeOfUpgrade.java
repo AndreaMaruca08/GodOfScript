@@ -10,21 +10,20 @@ public enum TypeOfUpgrade {
         public void upgrade(Entity entity) {
             entity.setMaxHp(entity.getMaxHp() * 1.08);
             entity.setHp(entity.getMaxHp());
-            entity.setPoints(entity.getPoints() - 1);
         }
     },
     ATTACK {
         @Override
         public void upgrade(Entity entity) {
-            entity.setBaseAttack(entity.getBaseAttack() * 1.08);
-            entity.setPoints(entity.getPoints() - 1);
+            entity.setMaxBaseAttack(entity.getMaxBaseAttack() * 1.08);
+            entity.setBaseAttack(entity.getMaxBaseAttack());
         }
     },
     DEFENSE {
         @Override
         public void upgrade(Entity entity) {
-            entity.setBaseDefense(entity.getBaseDefense() * 1.07);
-            entity.setPoints(entity.getPoints() - 1);
+            entity.setMaxBaseDefense(entity.getMaxBaseDefense() * 1.05);
+            entity.setBaseDefense(entity.getMaxBaseDefense());
         }
     };
 

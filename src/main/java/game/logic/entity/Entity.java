@@ -5,12 +5,11 @@ import game.graphic.shared.Colors;
 import game.logic.board.Position;
 import game.logic.scripts.ScriptType;
 import game.logic.scripts.Script;
-import game.logic.scripts.standard.CommonScripts;
+import game.logic.scripts.all.standard.CommonScripts;
 import lombok.Data;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +19,12 @@ public class Entity {
 
     protected double hp;
     protected double maxHp;
+
     protected double baseAttack;
+    protected double maxBaseAttack;
+
     protected double baseDefense;
+    protected double maxBaseDefense;
 
     @JsonIgnore
     protected List<Script> scripts;
@@ -35,12 +38,16 @@ public class Entity {
 
     protected int level;
 
+    protected boolean enraged;
+
     @JsonIgnore
     private Position position;
 
     public Entity(double maxHp, double baseAttack, double baseDefense, String name, List<Script> scripts, double xp, int level, int points) {
         this.maxHp = checkValue(maxHp);
         this.hp = checkValue(maxHp);
+        this.maxBaseAttack = checkValue(baseAttack);
+        this.maxBaseDefense = checkValue(baseDefense);
         this.baseAttack = checkValue(baseAttack);
         this.baseDefense = checkValue(baseDefense);
         this.name = name == null ? "No name" : name;
@@ -50,6 +57,7 @@ public class Entity {
         this.points = points;
         this.nextLevelXp = calcXpNeeded();
         this.xp = xp;
+        this.enraged = false;
         updateScriptTypes();
     }
 
@@ -74,6 +82,42 @@ public class Entity {
             xpNeeded = xpNeeded*1.15;
         }
         return xpNeeded;
+    }
+
+    public void regenerate(int percentage){
+        hp += getMaxHp() * percentage / 100;
+    }
+    public void lose(int percentage){
+        takeDamage(getMaxHp() * percentage / 100);
+    }
+
+    public void increaseAtk(double amount){
+        baseAttack += amount;
+    }
+    public void increaseAtk(int percentage){
+        baseAttack += getBaseAttack() * percentage / 100;
+    }
+
+    public void decreaseAtk(double amount){
+        baseAttack -= amount;
+    }
+    public void decreaseAtk(int percentage){
+        baseAttack -= getBaseAttack() * percentage / 100;
+    }
+
+    public void increaseDef(double amount){
+        baseDefense += amount;
+    }
+    public void increaseDef(int percentage){
+        baseDefense += getBaseDefense() * percentage / 100;
+    }
+
+    public void decreaseDef(double amount){
+        baseDefense -= amount;
+    }
+
+    public void decreaseDef(int percentage){
+        baseDefense -= getBaseDefense() * percentage / 100;
     }
 
     public double getHpPercentage(){
@@ -127,6 +171,10 @@ public class Entity {
             case "Beam" -> ScriptType.BEAM;
             case "Explosion" -> ScriptType.EXPLOSION;
             case "HyperBeam" -> ScriptType.HYPER_BEAM;
+            case "Regen" -> ScriptType.REGEN;
+            case "AttackBoost" -> ScriptType.ATK_BOOST;
+            case "DefenseBoost" -> ScriptType.DEF_BOOST;
+            case "Rage" -> ScriptType.RAGE;
             default -> throw new IllegalArgumentException("Unknown script type: " + script.getClass().getSimpleName());
         };
     }
@@ -144,10 +192,6 @@ public class Entity {
         return maxHp + baseAttack*3 + baseDefense*4;
     }
 
-    public void addScript(Script... tasks){
-        this.getScripts().addAll(Arrays.asList(tasks));
-        updateScriptTypes();
-    }
     public void addScript(List<Script> tasks){
         this.getScripts().addAll(tasks);
         updateScriptTypes();
@@ -159,6 +203,6 @@ public class Entity {
     }
 
     private double checkValue(double val){
-        return Math.clamp(val, 0, 1000000000);
+        return Math.clamp(val, 0, Integer.MAX_VALUE);
     }
 }

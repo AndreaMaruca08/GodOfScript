@@ -28,7 +28,11 @@ public class GamePage extends ScalePage {
 
         GraphicBoard boardGraphic = new GraphicBoard(new Dim(26, 6, 73, 93), board);
 
-        createKey("ESC", () -> {stop(); app.changePage("LevelsPage");}, "ESCAPE");
+        createKey("ESC", () -> {
+            stop();
+            player.reset();
+            app.changePage("LevelsPage");
+        }, "ESCAPE");
 
         board.setOnGameEnd(() -> {
             stop();
@@ -41,6 +45,8 @@ public class GamePage extends ScalePage {
         addScale(consoleBorder);
         addScale(boardGraphic);
     }
+
+    public void a (){}
 
     public void stop(){
         board.stop();

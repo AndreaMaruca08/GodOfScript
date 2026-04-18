@@ -4,11 +4,11 @@ import game.logic.board.Board;
 import game.logic.board.Position;
 import game.logic.entity.enemies.Enemy;
 import game.logic.scripts.Event;
-import game.logic.scripts.standard.damage.BaseAttack;
-import game.logic.scripts.standard.movements.Down;
-import game.logic.scripts.standard.movements.Left;
-import game.logic.scripts.standard.movements.Right;
-import game.logic.scripts.standard.movements.Up;
+import game.logic.scripts.all.standard.damage.BaseAttack;
+import game.logic.scripts.all.standard.movements.Down;
+import game.logic.scripts.all.standard.movements.Left;
+import game.logic.scripts.all.standard.movements.Right;
+import game.logic.scripts.all.standard.movements.Up;
 import lombok.Setter;
 
 import javax.swing.*;

@@ -9,9 +9,9 @@ import core.utilities.ScaleGraphic;
 import game.graphic.shared.Colors;
 import game.graphic.shared.Fonts;
 import game.logic.board.Board;
-import game.logic.scripts.ConsoleLog;
+import game.logic.scripts.console.ConsoleLog;
 import game.logic.scripts.Event;
-import game.logic.scripts.Console;
+import game.logic.scripts.console.Console;
 import lombok.Getter;
 
 import javax.swing.*;

@@ -2,10 +2,11 @@ package game.logic.entity.player;
 
 import game.logic.entity.Entity;
 import game.logic.scripts.ScriptType;
-import game.logic.scripts.level_based.lvl10.Lvl10Scripts;
-import game.logic.scripts.level_based.lvl15.Lvl15Scripts;
-import game.logic.scripts.level_based.lvl20.Lvl20Scripts;
-import game.logic.scripts.standard.CommonScripts;
+import game.logic.scripts.all.level_based.lvl10.Lvl10Scripts;
+import game.logic.scripts.all.level_based.lvl15.Lvl15Scripts;
+import game.logic.scripts.all.level_based.lvl20.Lvl20Scripts;
+import game.logic.scripts.all.level_based.lvl30.Lvl30Scripts;
+import game.logic.scripts.all.standard.CommonScripts;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ public class Player extends Entity {
     public Player(Player playerToSave) {
         super(
                 playerToSave.maxHp,
-                playerToSave.baseAttack,
-                playerToSave.baseDefense,
+                playerToSave.maxBaseAttack,
+                playerToSave.maxBaseDefense,
                 playerToSave.name,
                 playerToSave.scripts,
                 playerToSave.xp,
@@ -41,6 +42,8 @@ public class Player extends Entity {
 
     public void reset(){
         this.hp = maxHp;
+        this.baseAttack = maxBaseAttack;
+        this.baseDefense = maxBaseDefense;
     }
 
     public void gainXp(double xp){
@@ -49,7 +52,7 @@ public class Player extends Entity {
             this.xp -= nextLevelXp;
             nextLevelXp = nextLevelXp * 1.1;
             levelUp();
-            gainXp(0);
+            gainXp(0.0);
         }
         DataSaver.savePlayer(this);
     }
@@ -57,12 +60,15 @@ public class Player extends Entity {
     private void levelUp(){
         level++;
         maxHp = maxHp*1.08;
-        baseAttack = baseAttack*1.08;
-        baseDefense = baseDefense*1.08;
-        points++;
-        hp = maxHp;
-        discoverNewScripts();
+        maxBaseAttack = maxBaseAttack*1.08;
+        maxBaseDefense = maxBaseDefense*1.08;
 
+        hp = maxHp;
+        baseAttack = maxBaseAttack;
+        baseDefense = maxBaseDefense;
+
+        points++;
+        discoverNewScripts();
     }
 
     private void discoverNewScripts(){
@@ -74,6 +80,9 @@ public class Player extends Entity {
         }
         if(level >= 20 && hasNotScript(ScriptType.HYPER_BEAM)) {
             addScript(Lvl20Scripts.LVL20_SCRIPTS);
+        }
+        if(level >= 30 && hasNotScript(ScriptType.DEF_BOOST)) {
+            addScript(Lvl30Scripts.LVL_30_SCRIPTS);
         }
     }
 
@@ -87,6 +96,7 @@ public class Player extends Entity {
         if(points <= 0)
             return;
         stat.upgrade(this);
+        points--;
         DataSaver.savePlayer(this);
     }
 

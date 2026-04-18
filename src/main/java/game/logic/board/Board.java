@@ -187,7 +187,7 @@ public class Board {
         return foundTarget ? lastResult : Event.NO_ENEMY;
     }
 
-    public Event lineAction(Entity entity, String direction, int maxDistance, Function<Position, Event> action) {
+    public Event lineAction(Entity entity, String direction, int maxDistance, boolean disruptWalls, Function<Position, Event> action) {
         boolean foundTarget = false;
         Event lastResult = Event.NO_ENEMY;
 
@@ -195,8 +195,12 @@ public class Board {
             Position currentPos = ScriptHelper.newDirectedPosition(direction, i, entity);
             Tile tile = getTile(currentPos);
 
-            if(!isInBounds(currentPos) || tile.isWall()) {
+            if(!isInBounds(currentPos) || (tile.isWall() && !disruptWalls)) {
                 break;
+            }
+            if(disruptWalls && tile.isWall()){
+                resetTile(tile);
+                continue;
             }
             tile.setTargeted(true);
             foundTarget = true;

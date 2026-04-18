@@ -2,6 +2,7 @@ package game.logic.scripts;
 
 import game.logic.board.Board;
 import game.logic.entity.Entity;
+import game.logic.scripts.console.Command;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -51,5 +52,5 @@ public abstract class Script {
         return Integer.parseInt(currentArgs[index]);
     }
 
-    public abstract Event run(Entity player, Board board) throws Exception;
+    public abstract Event run(Entity entity, Board board) throws Exception;
 }

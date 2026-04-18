@@ -23,10 +23,9 @@ public class GraphicPlayerStatus extends ScaleComponent {
 
     @Override
     public void draw(ScaleGraphic g) {
-        //Base health bar
         g.drawRoundRect(HEALTH_BAR, 3, player.getColor().darker().darker().darker());
         g.drawRoundRect(
-                new Dim(HEALTH_BAR.x(), HEALTH_BAR.y(), HEALTH_BAR.width() * (player.getHp() / player.getMaxHp()), HEALTH_BAR.height()),
+                new Dim(HEALTH_BAR.x(), HEALTH_BAR.y(), HEALTH_BAR.width() * player.getHpPercentage(), HEALTH_BAR.height()),
                 3, player.getColor());
         g.changeDrawWidth(0.2);
         g.drawRoundRectBorder(HEALTH_BAR, 3, Color.black);
@@ -35,7 +34,7 @@ public class GraphicPlayerStatus extends ScaleComponent {
         g.font(0.9);
         g.drawTextLeft(HEALTH_BAR, String.format("%.1f/%.1f", player.getHp(), player.getMaxHp()), Colors.TEXT);
 
-        g.drawText(DETAILS, String.format("Lvl %d   XP: %.1f/%.1f    Points: %d   Base damage: %.1f   Base defense: %.1f",
-                player.getLevel(), player.getXp(), player.getNextLevelXp(), player.getPoints(), player.getBaseAttack(), player.getBaseDefense()), Colors.TEXT);
+        g.drawText(DETAILS, String.format("Lvl %d   XP: %.1f/%.1f    Points: %d   Base damage: %.1f   Base defense: %.1f   Enraged: %b",
+                player.getLevel(), player.getXp(), player.getNextLevelXp(), player.getPoints(), player.getBaseAttack(), player.getBaseDefense(), player.isEnraged()), Colors.TEXT);
     }
 }
